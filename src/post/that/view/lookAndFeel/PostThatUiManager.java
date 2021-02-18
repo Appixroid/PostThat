@@ -1,55 +1,47 @@
 package post.that.view.lookAndFeel;
 
-import java.io.IOException;
-import java.text.ParseException;
-import java.util.MissingResourceException;
+import java.awt.Color;
 
-import javax.swing.LookAndFeel;
 import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
-import javax.swing.plaf.synth.SynthLookAndFeel;
 
-import post.that.utils.LocalFile;
+import com.formdev.flatlaf.FlatLightLaf;
+
+import post.that.view.ressources.Colors;
+import post.that.view.ressources.Images;
 
 public class PostThatUiManager
-{
-	private static final String POSTTHAT_LOOK_AND_FEEL_PATH = "./assets/postit_look_and_feel.xml";
-
-	public static LookAndFeel getPostThatLookAndFeel() throws MissingResourceException
-	{
-		
-		try
-		{
-			SynthLookAndFeel laf = new SynthLookAndFeel();
-			laf.load(LocalFile.parseURL(POSTTHAT_LOOK_AND_FEEL_PATH));
-			return laf;
-		}
-		catch(ParseException | IOException e)
-		{
-			throw new MissingResourceException("Cannot load PostThat Look and Feel", SynthLookAndFeel.class.getName(), POSTTHAT_LOOK_AND_FEEL_PATH);
-		}
-		
-	}
-	
+{	
 	public static void setBestLookAndFeel()
 	{
 		try
 		{
-			UIManager.setLookAndFeel(PostThatUiManager.getPostThatLookAndFeel());
+			UIManager.setLookAndFeel(new FlatLightLaf());
+			
+			UIManager.put("InternalFrame.icon", Images.POSTIT_ICON.getScaledIcon(16, 16));				
+			UIManager.put("InternalFrame.closeIcon", Images.DELETE_ICON.getScaledIcon(16, 16));
+			UIManager.put("InternalFrame.closeButtonToolTip", "Delete");
+			
+			UIManager.put("InternalFrame.activeTitleBackground", Colors.YELLOW.toSwing());
+			UIManager.put("InternalFrame.inactiveTitleBackground", Colors.YELLOW.toSwing());
+			UIManager.put("InternalFrame.borderColor", Colors.YELLOW.toSwing());
+			
+			UIManager.put("InternalFrame.borderShadow", Color.BLACK);
+			
+			UIManager.put("TextArea.background", Colors.YELLOW.toSwing());
 		}
-		catch (MissingResourceException | UnsupportedLookAndFeelException e)
+		catch (Exception e)
 		{
 			try
 			{
 				UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 			}
-			catch(ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e1)
+			catch(Exception e1)
 			{
 				try
 				{
 					UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
 				}
-				catch(ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e2)
+				catch(Exception e2)
 				{
 					e2.printStackTrace();
 				}

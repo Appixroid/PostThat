@@ -12,7 +12,8 @@ import javax.swing.ImageIcon;
 public enum Images
 {
 	BOARD_BACKGROUND("assets/background.jpg"),
-	POSTIT_ICON("assets/pin.png");
+	POSTIT_ICON("assets/pin.png"),
+	DELETE_ICON("assets/trash.png");
 
 	private BufferedImage image;
 	private boolean loaded;
