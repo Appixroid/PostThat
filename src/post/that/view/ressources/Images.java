@@ -36,12 +36,12 @@ public enum Images
 	{
 		return new ImageIcon(this.getDefaultImage());
 	}
-	
+
 	public Image getDefaultImage()
 	{
 		return this.getScaledImage(this.image.getWidth(), this.image.getHeight());
 	}
-	
+
 	public Icon getScaledIcon(int width, int height)
 	{
 		return new ImageIcon(this.getScaledImage(width, height));

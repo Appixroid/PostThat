@@ -6,12 +6,13 @@ import java.awt.Dimension;
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
+import post.that.utils.Translation.Internationalization;
 import post.that.view.panes.BoardPane;
 
 public class MainFrame extends JFrame
 {
 	private static final long serialVersionUID = -5628864249328436672L;
-	private static final String TITLE = "Post That";
+	private static final String TITLE = Internationalization.get("APP_TITLE");
 	private static final Dimension DEFAULT_SIZE = new Dimension(720, 640);
 
 	public MainFrame()
