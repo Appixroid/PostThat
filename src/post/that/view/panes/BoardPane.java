@@ -20,7 +20,7 @@ public class BoardPane extends JDesktopPane
 	{
 		for(PostThat postThat : this.board.getPostThats())
 		{
-			this.add(new PostItPane(postThat));
+			this.add(new PostThatPane(postThat));
 		}
 	}
 

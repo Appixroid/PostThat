@@ -7,7 +7,7 @@ import javax.swing.JTextArea;
 
 import post.that.model.PostThat;
 
-public class PostItPane extends JInternalFrame
+public class PostThatPane extends JInternalFrame
 {
 	private static final long serialVersionUID = 1834391632998832385L;
 	private static final Dimension DEFAULT_SIZE = new Dimension(128, 128);
@@ -15,7 +15,7 @@ public class PostItPane extends JInternalFrame
 	private String id;
 	private JTextArea content;
 
-	public PostItPane(PostThat postThat)
+	public PostThatPane(PostThat postThat)
 	{
 		this();
 		this.setBounds(postThat.getX(), postThat.getY(), postThat.getWidth(), postThat.getHeight());
@@ -23,7 +23,7 @@ public class PostItPane extends JInternalFrame
 		this.id = postThat.getId();
 	}
 
-	public PostItPane()
+	public PostThatPane()
 	{
 		this.setup();
 		this.build();
@@ -31,7 +31,7 @@ public class PostItPane extends JInternalFrame
 
 	private void setup()
 	{
-		this.setSize(PostItPane.DEFAULT_SIZE);
+		this.setSize(PostThatPane.DEFAULT_SIZE);
 
 		this.setResizable(true);
 		this.setClosable(true);

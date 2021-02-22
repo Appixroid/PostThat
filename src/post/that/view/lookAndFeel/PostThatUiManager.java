@@ -18,7 +18,7 @@ public class PostThatUiManager
 		{
 			UIManager.setLookAndFeel(new FlatLightLaf());
 
-			UIManager.put("InternalFrame.icon", Images.POSTIT_ICON.getScaledIcon(16, 16));
+			UIManager.put("InternalFrame.icon", Images.POST_THAT_PANE_ICON.getScaledIcon(16, 16));
 			UIManager.put("InternalFrame.closeIcon", Images.DELETE_ICON.getScaledIcon(16, 16));
 			UIManager.put("InternalFrame.closeButtonToolTip", Internationalization.get("DELETE"));
 
