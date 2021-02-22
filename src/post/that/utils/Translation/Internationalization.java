@@ -87,7 +87,7 @@ public class Internationalization
 		TranslationFile translationFile = new TranslationFile(file);
 		this.translation.put(translationFile.getLanguage(), translationFile.asMap());
 	}
-	
+
 	public static Internationalization getInstance()
 	{
 		if(Internationalization.instance == null)
@@ -106,7 +106,7 @@ public class Internationalization
 
 	public static String get(String key)
 	{
-		return getInstance().translate(key);
+		return Internationalization.getInstance().translate(key);
 	}
 
 	public static class TranslationFileFilter implements FilenameFilter

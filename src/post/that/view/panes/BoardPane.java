@@ -5,6 +5,8 @@ import java.awt.Image;
 
 import javax.swing.JDesktopPane;
 
+import post.that.model.PostThat;
+import post.that.model.PostThatBoard;
 import post.that.view.ressources.Images;
 
 public class BoardPane extends JDesktopPane
@@ -12,10 +14,14 @@ public class BoardPane extends JDesktopPane
 	private static final long serialVersionUID = 838829298589001150L;
 	private static final Image BACKGROUND = Images.BOARD_BACKGROUND.getDefaultImage();
 
+	private final PostThatBoard board = PostThatBoard.getSavedBoard();
+
 	public BoardPane()
 	{
-		this.add(new PostItPane());
-		this.add(new PostItPane());
+		for(PostThat postThat : this.board.getPostThats())
+		{
+			this.add(new PostItPane(postThat));
+		}
 	}
 
 	@Override
