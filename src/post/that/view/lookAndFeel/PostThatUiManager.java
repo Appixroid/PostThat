@@ -1,7 +1,6 @@
 package post.that.view.lookAndFeel;
 
-import java.awt.Color;
-
+import javax.swing.BorderFactory;
 import javax.swing.UIManager;
 
 import com.formdev.flatlaf.FlatLightLaf;
@@ -22,11 +21,9 @@ public class PostThatUiManager
 			UIManager.put("InternalFrame.closeIcon", Images.DELETE_ICON.getScaledIcon(16, 16));
 			UIManager.put("InternalFrame.closeButtonToolTip", Internationalization.get("DELETE"));
 
+			UIManager.put("InternalFrame.border", BorderFactory.createEmptyBorder());
 			UIManager.put("InternalFrame.activeTitleBackground", Colors.YELLOW.toSwing());
 			UIManager.put("InternalFrame.inactiveTitleBackground", Colors.YELLOW.toSwing());
-			UIManager.put("InternalFrame.borderColor", Colors.YELLOW.toSwing());
-
-			UIManager.put("InternalFrame.borderShadow", Color.BLACK);
 
 			UIManager.put("TextArea.background", Colors.YELLOW.toSwing());
 		}
