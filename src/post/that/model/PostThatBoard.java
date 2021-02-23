@@ -1,36 +1,37 @@
 package post.that.model;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.TransformerFactoryConfigurationError;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.NamedNodeMap;
-import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 public class PostThatBoard
 {
-	private static final String SAVE_FILE = System.getProperty("user.home") + File.pathSeparator + ".post-that" + File.pathSeparator + "board.pbs";
+	public static final String ROOT_ELEMENT_NAME = "board";
 
-	private static final String ROOT_ELEMENT_NAME = "board";
-	private static final String POST_THAT_ELEMENT_NAME = "post-that";
-
-	private static final String POST_THAT_ID_ATTR = "id";
-	private static final String POST_THAT_X_ATTR = "x";
-	private static final String POST_THAT_Y_ATTR = "y";
-	private static final String POST_THAT_WIDTH_ATTR = "width";
-	private static final String POST_THAT_HEIGHT_ATTR = "height";
+	private static final String SAVE_FILE_PATH = System.getProperty("user.home") + File.separator + ".post-that" + File.separator + "board.pbs";
+	private static final File SAVE_FILE = new File(PostThatBoard.SAVE_FILE_PATH);
 
 	private final Map<String, PostThat> postThats;
 
@@ -94,35 +95,111 @@ public class PostThatBoard
 		return this.postThats.remove(id);
 	}
 
+	public boolean resize(String id, int newWidth, int newHeight)
+	{
+		PostThat postThat = this.get(id);
+		if(postThat != null)
+		{
+			postThat.resize(newWidth, newHeight);
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	public boolean move(String id, int newX, int newY)
+	{
+		PostThat postThat = this.get(id);
+		if(postThat != null)
+		{
+			postThat.move(newX, newY);
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	public boolean changeContent(String id, String content)
+	{
+		PostThat postThat = this.get(id);
+		if(postThat != null)
+		{
+			postThat.setContent(content);
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
 	public Collection<PostThat> getPostThats()
 	{
 		return this.postThats.values();
+	}
+
+	public boolean save()
+	{
+		try
+		{
+			this.createSaveFile();
+
+			Transformer transformer = TransformerFactory.newInstance().newTransformer();
+			transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
+			transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+			transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
+
+			transformer.transform(new DOMSource(PostThatBoard.toXML(this)), new StreamResult(new FileWriter(PostThatBoard.SAVE_FILE)));
+
+			return true;
+		}
+		catch(IOException | TransformerException | TransformerFactoryConfigurationError e)
+		{
+			return false;
+		}
+	}
+
+	@Override
+	public String toString()
+	{
+		return this.getPostThats().stream().map((postThat) -> {
+			return postThat.toString();
+		}).collect(Collectors.joining(", ", "[", "]"));
+	}
+
+	private void createSaveFile() throws IOException
+	{
+		if(!PostThatBoard.SAVE_FILE.exists())
+		{
+			if(!PostThatBoard.SAVE_FILE.createNewFile())
+			{
+				throw new IOException("File " + PostThatBoard.SAVE_FILE.getAbsolutePath() + " already");
+			}
+		}
 	}
 
 	public static PostThatBoard getSavedBoard()
 	{
 		PostThatBoard board = new PostThatBoard();
 
-		board.addAll(PostThatBoard.parse());
+		if(PostThatBoard.SAVE_FILE.exists())
+		{
+			board.addAll(PostThatBoard.parse(PostThatBoard.SAVE_FILE));
+		}
 
 		return board;
 	}
 
-	private static Collection<PostThat> parse()
+	private static Collection<PostThat> parse(File xmlFile)
 	{
 		try
 		{
-			File file = new File(PostThatBoard.SAVE_FILE);
 			DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-
-			if(file.exists())
-			{
-				return PostThatBoard.readAll(builder.parse(file));
-			}
-			else
-			{
-				return Collections.emptyList();
-			}
+			return PostThatBoard.readAll(builder.parse(xmlFile));
 		}
 		catch(ParserConfigurationException | SAXException | IOException e)
 		{
@@ -137,11 +214,11 @@ public class PostThatBoard
 		if(PostThatBoard.ROOT_ELEMENT_NAME.equals(root.getTagName()))
 		{
 			Collection<PostThat> postThats = new ArrayList<PostThat>();
-			NodeList list = root.getElementsByTagName(PostThatBoard.POST_THAT_ELEMENT_NAME);
+			NodeList list = root.getElementsByTagName(PostThat.POST_THAT_ELEMENT_NAME);
 
 			for(int i = 0; i < list.getLength(); i++)
 			{
-				postThats.add(PostThatBoard.read(list.item(i)));
+				postThats.add(PostThat.read(list.item(i)));
 			}
 
 			return postThats;
@@ -152,21 +229,26 @@ public class PostThatBoard
 		}
 	}
 
-	private static PostThat read(Node node)
+	private static Document toXML(PostThatBoard board)
 	{
-		NamedNodeMap attributes = node.getAttributes();
+		try
+		{
+			DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
 
-		String id = attributes.getNamedItem(PostThatBoard.POST_THAT_ID_ATTR).getNodeValue();
+			Document boardDocument = builder.newDocument();
+			Element root = boardDocument.createElement(PostThatBoard.ROOT_ELEMENT_NAME);
 
-		int x = Integer.parseInt(attributes.getNamedItem(PostThatBoard.POST_THAT_X_ATTR).getNodeValue());
-		int y = Integer.parseInt(attributes.getNamedItem(PostThatBoard.POST_THAT_Y_ATTR).getNodeValue());
-		int width = Integer.parseInt(attributes.getNamedItem(PostThatBoard.POST_THAT_WIDTH_ATTR).getNodeValue());
-		int height = Integer.parseInt(attributes.getNamedItem(PostThatBoard.POST_THAT_HEIGHT_ATTR).getNodeValue());
+			for(PostThat postThat : board.getPostThats())
+			{
+				root.appendChild(PostThat.toXML(boardDocument, postThat));
+			}
 
-		String content = node.getTextContent();
-
-		PostThat postThat = new PostThat(id, x, y, width, height, content);
-
-		return postThat;
+			boardDocument.appendChild(root);
+			return boardDocument;
+		}
+		catch(ParserConfigurationException e)
+		{
+			return null;
+		}
 	}
 }

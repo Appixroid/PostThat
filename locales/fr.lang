@@ -1,2 +1,3 @@
 APP_TITLE=Post That
 DELETE=Supprimer
+CONFIRM_EXIT_WITH_SAVE_ERROR=Sauvegarde du tableau impossible, voulez-vous quitter quand même ?

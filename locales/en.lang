@@ -1,2 +1,3 @@
 APP_TITLE=Post That
 DELETE=Delete
+CONFIRM_EXIT_WITH_SAVE_ERROR=Unable to save board, are you sure to leave ?
