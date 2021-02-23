@@ -1,3 +1,8 @@
 APP_TITLE=Post That
 DELETE=Delete
+SAVE_ERROR=Save Error
 CONFIRM_EXIT_WITH_SAVE_ERROR=Unable to save board, are you sure to leave ?
+FILE=File
+CREATE_POST_THAT=Create Post That
+SAVE=Save
+UNABLE_TO_SAVE_BOARD=Unable to save board

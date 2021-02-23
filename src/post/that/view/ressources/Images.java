@@ -13,7 +13,9 @@ public enum Images
 {
 	BOARD_BACKGROUND("assets/background.jpg"),
 	POST_THAT_PANE_ICON("assets/pin.png"),
-	DELETE_ICON("assets/trash.png");
+	DELETE_ICON("assets/trash.png"),
+	NOTE_ICON("assets/note.png"),
+	SAVE_ICON("assets/save.png");
 
 	private BufferedImage image;
 	private boolean loaded;

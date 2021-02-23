@@ -7,12 +7,10 @@ import java.awt.event.TextEvent;
 import java.awt.event.TextListener;
 
 import javax.swing.JDesktopPane;
-import javax.swing.JOptionPane;
 import javax.swing.event.InternalFrameEvent;
 
 import post.that.model.PostThat;
 import post.that.model.PostThatBoard;
-import post.that.utils.Translation.Internationalization;
 import post.that.view.adapter.ComponentAdapter;
 import post.that.view.adapter.InternalFrameAdapter;
 import post.that.view.ressources.Images;
@@ -28,25 +26,13 @@ public class BoardPane extends JDesktopPane implements InternalFrameAdapter, Com
 	{
 		for(PostThat postThat : this.board.getPostThats())
 		{
-			PostThatFrame postThatPane = new PostThatFrame(postThat);
-			postThatPane.addInternalFrameListener(this);
-			postThatPane.addComponentListener(this);
-			postThatPane.addTextListener(this);
-
-			this.add(postThatPane);
+			addPostThat(postThat);
 		}
 	}
 
-	public boolean confirmClose()
+	public boolean save()
 	{
-		if(this.board.save())
-		{
-			return true;
-		}
-		else
-		{
-			return JOptionPane.showConfirmDialog(this, Internationalization.get("CONFIRM_EXIT_WITH_SAVE_ERROR")) == JOptionPane.YES_OPTION;
-		}
+		return this.board.save();
 	}
 
 	@Override
@@ -82,5 +68,22 @@ public class BoardPane extends JDesktopPane implements InternalFrameAdapter, Com
 	{
 		PostThatFrame frame = (PostThatFrame) event.getSource();
 		this.board.changeContent(frame.getId(), frame.getText());
+	}
+
+	public void createEmptyPostThat()
+	{
+		PostThat postThat = new PostThat();
+		this.board.add(postThat);
+		this.addPostThat(postThat);
+	}
+	
+	private void addPostThat(PostThat postThat)
+	{
+		PostThatFrame postThatPane = new PostThatFrame(postThat);
+		postThatPane.addInternalFrameListener(this);
+		postThatPane.addComponentListener(this);
+		postThatPane.addTextListener(this);
+		
+		this.add(postThatPane);
 	}
 }

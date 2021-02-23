@@ -2,14 +2,20 @@ package post.that.view;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
 
 import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.WindowConstants;
 
 import post.that.utils.Translation.Internationalization;
 import post.that.view.adapter.WindowAdapter;
 import post.that.view.panes.BoardPane;
+import post.that.view.ressources.Images;
 
 public class MainFrame extends JFrame implements WindowAdapter
 {
@@ -44,14 +50,54 @@ public class MainFrame extends JFrame implements WindowAdapter
 
 		this.setLayout(new BorderLayout());
 		this.add(this.board, BorderLayout.CENTER);
+		
+		this.setJMenuBar(this.buildMenuBar());
+	}
+
+	private JMenuBar buildMenuBar()
+	{
+		JMenuBar menuBar = new JMenuBar();
+		
+		JMenu itemMenu = new JMenu(Internationalization.get("FILE"));
+		itemMenu.setMnemonic(KeyEvent.VK_P);
+		menuBar.add(itemMenu);
+		
+		JMenuItem addPostThatItem = new JMenuItem(Internationalization.get("CREATE_POST_THAT"));
+		addPostThatItem.setMnemonic(KeyEvent.CTRL_DOWN_MASK | KeyEvent.VK_N);
+		addPostThatItem.setIcon(Images.NOTE_ICON.getScaledIcon(16, 16));
+		addPostThatItem.addActionListener(event -> {
+			this.board.createEmptyPostThat();
+		});
+		itemMenu.add(addPostThatItem);
+		
+		JMenuItem saveItem = new JMenuItem(Internationalization.get("SAVE"));
+		saveItem.setMnemonic(KeyEvent.CTRL_DOWN_MASK | KeyEvent.VK_S);
+		saveItem.setIcon(Images.SAVE_ICON.getScaledIcon(16, 16));
+		saveItem.addActionListener(event -> {
+			if(!this.board.save())
+			{
+				JOptionPane.showMessageDialog(this, Internationalization.get("UNABLE_TO_SAVE_BOARD"), Internationalization.get("SAVE_ERROR"), JOptionPane.WARNING_MESSAGE);
+			}
+		});
+		itemMenu.add(saveItem);
+		
+		return menuBar;
 	}
 
 	@Override
 	public void windowClosing(WindowEvent event)
 	{
-		if(this.board.confirmClose())
+		if(this.board.save())
 		{
 			System.exit(0);
+		}
+		else
+		{
+			int userSelection = JOptionPane.showConfirmDialog(this, Internationalization.get("CONFIRM_EXIT_WITH_SAVE_ERROR"), Internationalization.get("SAVE_ERROR"), JOptionPane.ERROR_MESSAGE);
+			if(userSelection == JOptionPane.YES_OPTION)
+			{
+				System.exit(1);
+			}
 		}
 	}
 }
