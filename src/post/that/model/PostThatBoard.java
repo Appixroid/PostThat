@@ -175,6 +175,11 @@ public class PostThatBoard
 	{
 		if(!PostThatBoard.SAVE_FILE.exists())
 		{
+			if(!PostThatBoard.SAVE_FILE.getParentFile().mkdirs())
+			{
+				throw new IOException("Dirs " + SAVE_FILE.getParent() + " cannot be created");
+			}
+
 			if(!PostThatBoard.SAVE_FILE.createNewFile())
 			{
 				throw new IOException("File " + PostThatBoard.SAVE_FILE.getAbsolutePath() + " already");
