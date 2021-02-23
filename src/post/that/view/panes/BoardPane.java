@@ -26,7 +26,7 @@ public class BoardPane extends JDesktopPane implements InternalFrameAdapter, Com
 	{
 		for(PostThat postThat : this.board.getPostThats())
 		{
-			addPostThat(postThat);
+			this.addPostThat(postThat);
 		}
 	}
 
@@ -76,14 +76,14 @@ public class BoardPane extends JDesktopPane implements InternalFrameAdapter, Com
 		this.board.add(postThat);
 		this.addPostThat(postThat);
 	}
-	
+
 	private void addPostThat(PostThat postThat)
 	{
 		PostThatFrame postThatPane = new PostThatFrame(postThat);
 		postThatPane.addInternalFrameListener(this);
 		postThatPane.addComponentListener(this);
 		postThatPane.addTextListener(this);
-		
+
 		this.add(postThatPane);
 	}
 }

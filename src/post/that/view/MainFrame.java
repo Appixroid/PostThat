@@ -115,7 +115,7 @@ public class MainFrame extends JFrame implements WindowAdapter
 			this.board.createEmptyPostThat();
 		});
 		toolBar.add(addPostThatButton);
-		
+
 		JButton saveButton = new JButton(Images.SAVE_ICON.getScaledIcon(16, 16));
 		saveButton.addActionListener(event -> {
 			if(!this.board.save())
