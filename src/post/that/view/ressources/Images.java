@@ -15,7 +15,8 @@ public enum Images
 	POST_THAT_PANE_ICON("assets/pin.png"),
 	DELETE_ICON("assets/trash.png"),
 	NOTE_ICON("assets/note.png"),
-	SAVE_ICON("assets/save.png");
+	SAVE_ICON("assets/save.png"),
+	CLEAR_ICON("assets/clear.png");
 
 	private BufferedImage image;
 	private boolean loaded;

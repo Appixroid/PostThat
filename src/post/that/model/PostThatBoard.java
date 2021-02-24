@@ -142,6 +142,11 @@ public class PostThatBoard
 		return this.postThats.values();
 	}
 
+	public void clear()
+	{
+		this.postThats.clear();
+	}
+	
 	public boolean save()
 	{
 		try

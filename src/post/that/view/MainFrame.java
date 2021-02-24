@@ -91,6 +91,14 @@ public class MainFrame extends JFrame implements WindowAdapter
 			this.board.createEmptyPostThat();
 		});
 		itemMenu.add(addPostThatItem);
+		
+		JMenuItem clearItem = new JMenuItem(Internationalization.get("CLEAR_BOARD"));
+		clearItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_L, InputEvent.CTRL_DOWN_MASK));
+		clearItem.setIcon(Images.CLEAR_ICON.getScaledIcon(16, 16));
+		clearItem.addActionListener(event -> {
+			this.board.clear();
+		});
+		itemMenu.add(clearItem);
 
 		JMenuItem saveItem = new JMenuItem(Internationalization.get("SAVE"));
 		saveItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_DOWN_MASK));
@@ -115,6 +123,12 @@ public class MainFrame extends JFrame implements WindowAdapter
 			this.board.createEmptyPostThat();
 		});
 		toolBar.add(addPostThatButton);
+		
+		JButton clearButton = new JButton(Images.CLEAR_ICON.getScaledIcon(16, 16));
+		clearButton.addActionListener(event -> {
+			this.board.clear();
+		});
+		toolBar.add(clearButton);
 
 		JButton saveButton = new JButton(Images.SAVE_ICON.getScaledIcon(16, 16));
 		saveButton.addActionListener(event -> {

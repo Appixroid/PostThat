@@ -7,6 +7,7 @@ import java.awt.event.TextEvent;
 import java.awt.event.TextListener;
 
 import javax.swing.JDesktopPane;
+import javax.swing.JInternalFrame;
 import javax.swing.event.InternalFrameEvent;
 
 import post.that.model.PostThat;
@@ -33,6 +34,16 @@ public class BoardPane extends JDesktopPane implements InternalFrameAdapter, Com
 	public boolean save()
 	{
 		return this.board.save();
+	}
+	
+	public void clear()
+	{
+		this.board.clear();
+		
+		for(JInternalFrame frame : this.getAllFrames())
+		{
+			this.getDesktopManager().closeFrame(frame);
+		}
 	}
 
 	@Override

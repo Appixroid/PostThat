@@ -7,3 +7,4 @@ CREATE_POST_THAT=Ajouter un Post That
 SAVE=Sauvegarder
 UNABLE_TO_SAVE_BOARD=Impossible de sauvegarder le tableau
 BOARD_MANAGEMENT=Gestion du tableau
+CLEAR_BOARD=Nettoyer tableau
