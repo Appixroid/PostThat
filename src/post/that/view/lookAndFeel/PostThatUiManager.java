@@ -24,8 +24,6 @@ public class PostThatUiManager
 			UIManager.put("InternalFrame.border", BorderFactory.createEmptyBorder());
 			UIManager.put("InternalFrame.activeTitleBackground", Colors.YELLOW.toSwing());
 			UIManager.put("InternalFrame.inactiveTitleBackground", Colors.YELLOW.toSwing());
-
-			UIManager.put("TextArea.background", Colors.YELLOW.toSwing());
 		}
 		catch(Exception e)
 		{

@@ -10,6 +10,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 import post.that.model.PostThat;
+import post.that.view.ressources.Colors;
 
 public class PostThatFrame extends JInternalFrame
 {
@@ -80,6 +81,7 @@ public class PostThatFrame extends JInternalFrame
 	private void build()
 	{
 		this.content = new JTextArea();
+		this.content.setBackground(Colors.YELLOW.toSwing());
 		this.getContentPane().add(this.content);
 	}
 }
