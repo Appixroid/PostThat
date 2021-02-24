@@ -12,8 +12,8 @@ import javax.swing.ImageIcon;
 public enum Images
 {
 	BOARD_BACKGROUND("assets/background.jpg"),
-	POST_THAT_PANE_ICON("assets/pin.png"),
-	DELETE_ICON("assets/trash.png"),
+	PIN_ICON("assets/pin.png"),
+	TRASH_ICON("assets/trash.png"),
 	NOTE_ICON("assets/note.png"),
 	SAVE_ICON("assets/save.png"),
 	CLEAR_ICON("assets/clear.png");
