@@ -156,6 +156,18 @@ public class PostThatFrame extends JInternalFrame
 			});
 			
 			JLabel delete = new JLabel(Images.TRASH_ICON.getScaledIcon(16, 16));
+			delete.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseEntered(MouseEvent event)
+				{
+					PostThatTitleBar.this.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+				}
+				@Override
+				public void mouseClicked(MouseEvent event)
+				{
+					PostThatFrame.this.doDefaultCloseAction();
+				}
+			});
 
 			this.add(move);
 			this.add(Box.createHorizontalGlue());
