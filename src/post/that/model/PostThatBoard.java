@@ -1,5 +1,6 @@
 package post.that.model;
 
+import java.awt.Color;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -58,9 +59,9 @@ public class PostThatBoard
 		return allAdded;
 	}
 
-	public String add(int x, int y, int width, int height, String content)
+	public String add(int x, int y, int width, int height, String content, Color color)
 	{
-		PostThat postThat = new PostThat(x, y, width, height, content);
+		PostThat postThat = new PostThat(x, y, width, height, content, color);
 
 		if(this.add(postThat))
 		{
@@ -137,6 +138,20 @@ public class PostThatBoard
 		}
 	}
 
+	public boolean changeColor(String id, Color color)
+	{
+		PostThat postThat = this.get(id);
+		if(postThat != null)
+		{
+			postThat.setColor(color);
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
 	public Collection<PostThat> getPostThats()
 	{
 		return this.postThats.values();

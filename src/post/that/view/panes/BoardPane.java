@@ -14,9 +14,11 @@ import post.that.model.PostThat;
 import post.that.model.PostThatBoard;
 import post.that.view.adapter.ComponentAdapter;
 import post.that.view.adapter.InternalFrameAdapter;
+import post.that.view.listeners.ColorEvent;
+import post.that.view.listeners.ColorListener;
 import post.that.view.ressources.Images;
 
-public class BoardPane extends JDesktopPane implements InternalFrameAdapter, ComponentAdapter, TextListener
+public class BoardPane extends JDesktopPane implements InternalFrameAdapter, ComponentAdapter, TextListener, ColorListener
 {
 	private static final long serialVersionUID = 838829298589001150L;
 	private static final Image BACKGROUND = Images.BOARD_BACKGROUND.getDefaultImage();
@@ -80,6 +82,13 @@ public class BoardPane extends JDesktopPane implements InternalFrameAdapter, Com
 		PostThatFrame frame = (PostThatFrame) event.getSource();
 		this.board.changeContent(frame.getId(), frame.getText());
 	}
+	
+	@Override
+	public void colorValueChanged(ColorEvent event)
+	{
+		PostThatFrame frame = (PostThatFrame) event.getSource();
+		this.board.changeColor(frame.getId(), frame.getBackground());
+	}
 
 	public void createEmptyPostThat()
 	{
@@ -94,6 +103,7 @@ public class BoardPane extends JDesktopPane implements InternalFrameAdapter, Com
 		postThatPane.addInternalFrameListener(this);
 		postThatPane.addComponentListener(this);
 		postThatPane.addTextListener(this);
+		postThatPane.addColorListener(this);
 
 		this.add(postThatPane);
 	}

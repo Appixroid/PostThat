@@ -10,6 +10,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.TextEvent;
 import java.awt.event.TextListener;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -26,7 +28,8 @@ import javax.swing.plaf.basic.BasicInternalFrameUI;
 import post.that.model.PostThat;
 import post.that.utils.Translation.Internationalization;
 import post.that.view.adapter.MouseAdapter;
-import post.that.view.ressources.Colors;
+import post.that.view.listeners.ColorEvent;
+import post.that.view.listeners.ColorListener;
 import post.that.view.ressources.Images;
 
 public class PostThatFrame extends JInternalFrame
@@ -34,16 +37,19 @@ public class PostThatFrame extends JInternalFrame
 	private static final long serialVersionUID = 1834391632998832385L;
 	private static final Dimension DEFAULT_SIZE = new Dimension(128, 128);
 
+	private List<ColorListener> listeners = new ArrayList<ColorListener>();
+	
+	private PostThatTitleBar titleBar;
 	private String id;
 	private JTextArea content;
-	private PostThatTitleBar titleBar;
-
+	
 	public PostThatFrame(PostThat postThat)
 	{
 		this();
 		this.setBounds(postThat.getX(), postThat.getY(), postThat.getWidth(), postThat.getHeight());
 		this.content.setText(postThat.getContent());
 		this.id = postThat.getId();
+		this.changeBackground(postThat.getColor());
 	}
 
 	public PostThatFrame()
@@ -85,12 +91,22 @@ public class PostThatFrame extends JInternalFrame
 			}
 		});
 	}
+	
+	public void addColorListener(ColorListener listener)
+	{
+		this.listeners.add(listener);
+	}
 
 	public void changeBackground(Color bg)
 	{
 		this.setBackground(bg);
 		this.titleBar.setBackground(bg);
 		this.content.setBackground(bg);
+		
+		for(ColorListener listener : this.listeners)
+		{
+			listener.colorValueChanged(new ColorEvent(this));
+		}
 	}
 
 	private void setup()
@@ -118,7 +134,6 @@ public class PostThatFrame extends JInternalFrame
 		contentPane.add(this.content, BorderLayout.CENTER);
 
 		this.setBorder(BorderFactory.createEmptyBorder());
-		this.changeBackground(Colors.YELLOW.toSwing());
 	}
 
 	private void hideFrameTitleBar()
