@@ -59,9 +59,13 @@ public class MainFrame extends JFrame implements WindowAdapter
 	private void setup()
 	{
 		this.setTitle(MainFrame.TITLE);
+		this.setIconImage(Images.NOTE_ICON.getDefaultImage());
+		
 		this.setSize(MainFrame.DEFAULT_SIZE);
+		
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+		
 		this.addWindowListener(this);
 	}
 
