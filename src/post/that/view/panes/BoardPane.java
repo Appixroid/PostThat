@@ -35,11 +35,11 @@ public class BoardPane extends JDesktopPane implements InternalFrameAdapter, Com
 	{
 		return this.board.save();
 	}
-
+	
 	public void clear()
 	{
 		this.board.clear();
-
+		
 		for(JInternalFrame frame : this.getAllFrames())
 		{
 			this.getDesktopManager().closeFrame(frame);

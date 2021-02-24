@@ -14,6 +14,7 @@ import java.awt.event.TextListener;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.JColorChooser;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -23,6 +24,8 @@ import javax.swing.event.DocumentListener;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 
 import post.that.model.PostThat;
+import post.that.utils.Translation.Internationalization;
+import post.that.view.adapter.MouseAdapter;
 import post.that.view.ressources.Colors;
 import post.that.view.ressources.Images;
 
@@ -102,7 +105,7 @@ public class PostThatFrame extends JInternalFrame
 
 	private void build()
 	{
-		this.hideFrameTitleBar();
+		hideFrameTitleBar();
 
 		Container contentPane = this.getContentPane();
 		BorderLayout layout = new BorderLayout();
@@ -128,30 +131,48 @@ public class PostThatFrame extends JInternalFrame
 	{
 		private static final long serialVersionUID = -2974103250560115326L;
 
-		private Point dragOffset;
+		private Point dragOffset; 
 
 		public PostThatTitleBar()
 		{
 			this.setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
 
 			JLabel move = new JLabel(Images.PIN_ICON.getScaledIcon(16, 16));
+			
+			JLabel changeColor = new JLabel(Images.PICKER_ICON.getScaledIcon(16, 16));
+			changeColor.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseEntered(MouseEvent event)
+				{
+					PostThatTitleBar.this.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+				}
+				
+				@Override
+				public void mouseClicked(MouseEvent event)
+				{
+					Color selectedColor = JColorChooser.showDialog(PostThatFrame.this, Internationalization.get("CHANGE_COLOR"), PostThatFrame.this.getBackground());
+					PostThatFrame.this.changeBackground(selectedColor);
+				}
+			});
+			
 			JLabel delete = new JLabel(Images.TRASH_ICON.getScaledIcon(16, 16));
 
 			this.add(move);
 			this.add(Box.createHorizontalGlue());
+			this.add(changeColor);
 			this.add(delete);
-
+			
 			this.setBorder(BorderFactory.createEmptyBorder(4, 4, 4, 4));
-
+			
 			this.addMouseMotionListener(this);
-		}
-
+		}	
+		
 		@Override
 		public void mouseMoved(MouseEvent event)
 		{
 			Point origin = PostThatFrame.this.getLocationOnScreen();
 			Point current = event.getLocationOnScreen();
-
+			
 			this.dragOffset = new Point(current.x - origin.x, current.y - origin.y);
 			this.setCursor(Cursor.getPredefinedCursor(Cursor.MOVE_CURSOR));
 		}
@@ -160,10 +181,10 @@ public class PostThatFrame extends JInternalFrame
 		public void mouseDragged(MouseEvent event)
 		{
 			Point windowOnScreen = PostThatFrame.this.getParent().getLocationOnScreen();
-			Point mouseOnScreen = event.getLocationOnScreen();
-			Point position = new Point(mouseOnScreen.x - windowOnScreen.x - this.dragOffset.x, mouseOnScreen.y - windowOnScreen.y - this.dragOffset.y);
+            Point mouseOnScreen = event.getLocationOnScreen();
+            Point position = new Point(mouseOnScreen.x - windowOnScreen.x - this.dragOffset.x, mouseOnScreen.y - windowOnScreen.y - this.dragOffset.y);
 
-			PostThatFrame.this.setLocation(position);
+            PostThatFrame.this.setLocation(position);
 		}
 	}
 }

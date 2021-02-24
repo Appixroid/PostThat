@@ -1,10 +1,11 @@
 APP_TITLE=Post That
 DELETE=Delete
-SAVE_ERROR=Save Error
+SAVE_ERROR=Save error
 CONFIRM_EXIT_WITH_SAVE_ERROR=Unable to save board, are you sure to leave ?
 FILE=File
 CREATE_POST_THAT=Create Post That
 SAVE=Save
 UNABLE_TO_SAVE_BOARD=Unable to save board
-BOARD_MANAGEMENT=Board Management
+BOARD_MANAGEMENT=Board management
 CLEAR_BOARD=Clear board
+CHANGE_COLOR=Change color

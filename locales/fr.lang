@@ -1,6 +1,6 @@
 APP_TITLE=Post That
 DELETE=Supprimer
-SAVE_ERROR=Erreur de Sauvegarde
+SAVE_ERROR=Erreur de sauvegarde
 CONFIRM_EXIT_WITH_SAVE_ERROR=Sauvegarde du tableau impossible, voulez-vous quitter quand même ?
 FILE=Fichier
 CREATE_POST_THAT=Ajouter un Post That
@@ -8,3 +8,4 @@ SAVE=Sauvegarder
 UNABLE_TO_SAVE_BOARD=Impossible de sauvegarder le tableau
 BOARD_MANAGEMENT=Gestion du tableau
 CLEAR_BOARD=Nettoyer tableau
+CHANGE_COLOR=Changer la couleur

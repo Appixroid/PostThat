@@ -25,8 +25,7 @@ public class PostThatUiManager
 					UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
 				}
 				catch(Exception e2)
-				{
-				}
+				{}
 			}
 		}
 	}
