@@ -7,6 +7,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -26,7 +27,9 @@ public class MainFrame extends JFrame implements WindowAdapter
 	private static final long serialVersionUID = -5628864249328436672L;
 	private static final String TITLE = Internationalization.get("APP_TITLE");
 	private static final Dimension DEFAULT_SIZE = new Dimension(720, 640);
+	
 	private BoardPane board;
+	private JToolBar toolBar;
 
 	public MainFrame()
 	{
@@ -75,7 +78,8 @@ public class MainFrame extends JFrame implements WindowAdapter
 		this.setJMenuBar(this.buildMenuBar());
 
 		this.setLayout(new BorderLayout());
-		this.add(this.buildToolBar(), BorderLayout.NORTH);
+		toolBar = this.buildToolBar();
+		this.add(toolBar, BorderLayout.NORTH);
 		this.add(this.board, BorderLayout.CENTER);
 
 	}
@@ -84,9 +88,9 @@ public class MainFrame extends JFrame implements WindowAdapter
 	{
 		JMenuBar menuBar = new JMenuBar();
 
-		JMenu itemMenu = new JMenu(Internationalization.get("FILE"));
-		itemMenu.setMnemonic(KeyEvent.VK_P);
-		menuBar.add(itemMenu);
+		JMenu fileMenu = new JMenu(Internationalization.get("FILE"));
+		fileMenu.setMnemonic(KeyEvent.VK_P);
+		menuBar.add(fileMenu);
 
 		JMenuItem addPostThatItem = new JMenuItem(Internationalization.get("CREATE_POST_THAT"));
 		addPostThatItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, InputEvent.CTRL_DOWN_MASK));
@@ -94,7 +98,7 @@ public class MainFrame extends JFrame implements WindowAdapter
 		addPostThatItem.addActionListener(event -> {
 			this.board.createEmptyPostThat();
 		});
-		itemMenu.add(addPostThatItem);
+		fileMenu.add(addPostThatItem);
 		
 		JMenuItem clearItem = new JMenuItem(Internationalization.get("CLEAR_BOARD"));
 		clearItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_L, InputEvent.CTRL_DOWN_MASK));
@@ -102,7 +106,7 @@ public class MainFrame extends JFrame implements WindowAdapter
 		clearItem.addActionListener(event -> {
 			this.board.clear();
 		});
-		itemMenu.add(clearItem);
+		fileMenu.add(clearItem);
 
 		JMenuItem saveItem = new JMenuItem(Internationalization.get("SAVE"));
 		saveItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_DOWN_MASK));
@@ -113,8 +117,28 @@ public class MainFrame extends JFrame implements WindowAdapter
 				JOptionPane.showMessageDialog(this, Internationalization.get("UNABLE_TO_SAVE_BOARD"), Internationalization.get("SAVE_ERROR"), JOptionPane.WARNING_MESSAGE);
 			}
 		});
-		itemMenu.add(saveItem);
+		fileMenu.add(saveItem);
 
+		
+		JMenu viewMenu = new JMenu(Internationalization.get("VIEW"));
+		viewMenu.setMnemonic(KeyEvent.VK_P);
+		menuBar.add(viewMenu);
+		
+		JCheckBoxMenuItem menuBarVisibility = new JCheckBoxMenuItem(Internationalization.get("SHOW_MENU_BAR"));
+		menuBarVisibility.setSelected(true);
+		menuBarVisibility.addActionListener(event -> {
+			menuBar.setVisible(menuBarVisibility.isSelected());
+		});
+		viewMenu.add(menuBarVisibility);
+		
+		JCheckBoxMenuItem toolBarVisibility = new JCheckBoxMenuItem(Internationalization.get("SHOW_TOOL_BAR"));
+		toolBarVisibility.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_T, InputEvent.CTRL_DOWN_MASK));
+		toolBarVisibility.setSelected(true);
+		toolBarVisibility.addActionListener(event -> {
+			MainFrame.this.toolBar.setVisible(toolBarVisibility.isSelected());
+		});
+		viewMenu.add(toolBarVisibility);
+		
 		return menuBar;
 	}
 

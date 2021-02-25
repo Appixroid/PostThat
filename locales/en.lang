@@ -9,3 +9,6 @@ UNABLE_TO_SAVE_BOARD=Unable to save board
 BOARD_MANAGEMENT=Board management
 CLEAR_BOARD=Clear board
 CHANGE_COLOR=Change color
+VIEW=View
+SHOW_MENU_BAR=Show menu bar
+SHOW_TOOL_BAR=Show tool bar
