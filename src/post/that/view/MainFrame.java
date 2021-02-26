@@ -20,6 +20,7 @@ import javax.swing.WindowConstants;
 import post.that.utils.Translation.Internationalization;
 import post.that.view.adapter.WindowAdapter;
 import post.that.view.panes.BoardPane;
+import post.that.view.preferences.Preferences;
 import post.that.view.ressources.Images;
 
 public class MainFrame extends JFrame implements WindowAdapter
@@ -44,7 +45,7 @@ public class MainFrame extends JFrame implements WindowAdapter
 
 	@Override
 	public void windowClosing(WindowEvent event)
-	{
+	{		
 		if(this.board.save())
 		{
 			System.exit(0);
@@ -119,23 +120,36 @@ public class MainFrame extends JFrame implements WindowAdapter
 		});
 		fileMenu.add(saveItem);
 
+		Preferences preferences = Preferences.getInstance();
 		
 		JMenu viewMenu = new JMenu(Internationalization.get("VIEW"));
 		viewMenu.setMnemonic(KeyEvent.VK_P);
 		menuBar.add(viewMenu);
 		
 		JCheckBoxMenuItem menuBarVisibility = new JCheckBoxMenuItem(Internationalization.get("SHOW_MENU_BAR"));
-		menuBarVisibility.setSelected(true);
+		menuBarVisibility.setSelected(preferences.getBoolean("SHOW_MENU_BAR", true));
 		menuBarVisibility.addActionListener(event -> {
-			menuBar.setVisible(menuBarVisibility.isSelected());
+			boolean selected = menuBarVisibility.isSelected();
+			menuBar.setVisible(selected);
+			preferences.setBoolean("SHOW_MENU_BAR", selected);
+			if(!preferences.save())
+			{
+				JOptionPane.showMessageDialog(this, Internationalization.get("UNABLE_TO_SAVE_PREFERENCES"), Internationalization.get("SAVE_ERROR"), JOptionPane.WARNING_MESSAGE);
+			}
 		});
 		viewMenu.add(menuBarVisibility);
 		
 		JCheckBoxMenuItem toolBarVisibility = new JCheckBoxMenuItem(Internationalization.get("SHOW_TOOL_BAR"));
 		toolBarVisibility.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_T, InputEvent.CTRL_DOWN_MASK));
-		toolBarVisibility.setSelected(true);
+		toolBarVisibility.setSelected(preferences.getBoolean("SHOW_TOOL_BAR", true));
 		toolBarVisibility.addActionListener(event -> {
-			MainFrame.this.toolBar.setVisible(toolBarVisibility.isSelected());
+			boolean selected = toolBarVisibility.isSelected();
+			MainFrame.this.toolBar.setVisible(selected);
+			preferences.setBoolean("SHOW_TOOL_BAR", selected);
+			if(!preferences.save())
+			{
+				JOptionPane.showMessageDialog(this, Internationalization.get("UNABLE_TO_SAVE_PREFERENCES"), Internationalization.get("SAVE_ERROR"), JOptionPane.WARNING_MESSAGE);
+			}
 		});
 		viewMenu.add(toolBarVisibility);
 		
@@ -166,6 +180,8 @@ public class MainFrame extends JFrame implements WindowAdapter
 			}
 		});
 		toolBar.add(saveButton);
+		
+		toolBar.setVisible(Preferences.getInstance().getBoolean("SHOW_TOOL_BAR", true));
 
 		return toolBar;
 	}

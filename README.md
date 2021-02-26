@@ -16,5 +16,5 @@ To run PostThat, simply download a release archive with github and extract it wh
 
 The future updates will include :
 - Multi-board
-- Interface customization
+- Auto-save
 - ... (Any other ideas I like)

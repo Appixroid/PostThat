@@ -27,12 +27,11 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import post.that.utils.LocalPaths;
+
 public class PostThatBoard
 {
 	public static final String ROOT_ELEMENT_NAME = "board";
-
-	private static final String SAVE_FILE_PATH = System.getProperty("user.home") + File.separator + ".post-that" + File.separator + "board.pbs";
-	private static final File SAVE_FILE = new File(PostThatBoard.SAVE_FILE_PATH);
 
 	private final Map<String, PostThat> postThats;
 
@@ -164,6 +163,8 @@ public class PostThatBoard
 	
 	public boolean save()
 	{
+		File saveFile = LocalPaths.SAVE_FILE.toLocalFile().asFile();
+
 		try
 		{
 			this.createSaveFile();
@@ -173,7 +174,7 @@ public class PostThatBoard
 			transformer.setOutputProperty(OutputKeys.INDENT, "yes");
 			transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
 
-			transformer.transform(new DOMSource(PostThatBoard.toXML(this)), new StreamResult(new FileWriter(PostThatBoard.SAVE_FILE)));
+			transformer.transform(new DOMSource(PostThatBoard.toXML(this)), new StreamResult(new FileWriter(saveFile)));
 
 			return true;
 		}
@@ -193,27 +194,30 @@ public class PostThatBoard
 
 	private void createSaveFile() throws IOException
 	{
-		if(!PostThatBoard.SAVE_FILE.exists())
+		File saveFile = LocalPaths.SAVE_FILE.toLocalFile().asFile();
+		
+		if(!saveFile.exists())
 		{
-			if(!PostThatBoard.SAVE_FILE.getParentFile().mkdirs())
+			if(!saveFile.getParentFile().mkdirs())
 			{
-				throw new IOException("Dirs " + PostThatBoard.SAVE_FILE.getParent() + " cannot be created");
+				throw new IOException("Dirs " + saveFile.getParent() + " cannot be created");
 			}
 
-			if(!PostThatBoard.SAVE_FILE.createNewFile())
+			if(!saveFile.createNewFile())
 			{
-				throw new IOException("File " + PostThatBoard.SAVE_FILE.getAbsolutePath() + " already");
+				throw new IOException("File " + saveFile.getAbsolutePath() + " already");
 			}
 		}
 	}
 
 	public static PostThatBoard getSavedBoard()
 	{
+		File saveFile = LocalPaths.SAVE_FILE.toLocalFile().asFile();
 		PostThatBoard board = new PostThatBoard();
 
-		if(PostThatBoard.SAVE_FILE.exists())
+		if(saveFile.exists())
 		{
-			board.addAll(PostThatBoard.parse(PostThatBoard.SAVE_FILE));
+			board.addAll(PostThatBoard.parse(saveFile));
 		}
 
 		return board;
