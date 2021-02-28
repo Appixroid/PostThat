@@ -21,9 +21,8 @@ public class PostThat
 
 	private static final String CHARS_OF_IDS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_?!.,%$€.";
 	private static final int DEFAULT_SIZE = 250;
-	
-	public static final Color DEFAULT_COLOR = new Color(255, 241, 118);
 
+	public static final Color DEFAULT_COLOR = new Color(255, 241, 118);
 
 	private String id;
 
@@ -34,12 +33,12 @@ public class PostThat
 	private int height;
 
 	private Color color;
-	
+
 	private String content;
 
 	public PostThat()
 	{
-		this(0, 0, PostThat.DEFAULT_SIZE, PostThat.DEFAULT_SIZE, "", DEFAULT_COLOR);
+		this(0, 0, PostThat.DEFAULT_SIZE, PostThat.DEFAULT_SIZE, "", PostThat.DEFAULT_COLOR);
 	}
 
 	public PostThat(int x, int y, int width, int height, String content, Color color)
@@ -104,12 +103,12 @@ public class PostThat
 	{
 		this.content = content;
 	}
-	
+
 	public Color getColor()
 	{
 		return this.color;
 	}
-	
+
 	public void setColor(Color color)
 	{
 		this.color = color;
@@ -150,7 +149,7 @@ public class PostThat
 		int r = Integer.parseInt(colorComponents[0]);
 		int g = Integer.parseInt(colorComponents[1]);
 		int b = Integer.parseInt(colorComponents[2]);
-		
+
 		String content = node.getTextContent();
 
 		PostThat postThat = new PostThat(id, x, y, width, height, content, new Color(r, g, b));
@@ -182,7 +181,7 @@ public class PostThat
 		Attr heightAttribute = document.createAttribute(PostThat.POST_THAT_HEIGHT_ATTR);
 		heightAttribute.setNodeValue(Integer.toString(postThat.getHeight()));
 		attributes.setNamedItem(heightAttribute);
-		
+
 		Attr colorAttribute = document.createAttribute(PostThat.POST_THAT_COLOR_ATTR);
 		Color color = postThat.getColor();
 		colorAttribute.setNodeValue(Integer.toString(color.getRed()) + ", " + Integer.toString(color.getGreen()) + ", " + Integer.toString(color.getBlue()));

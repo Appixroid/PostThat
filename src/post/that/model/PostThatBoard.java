@@ -27,25 +27,48 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import post.that.utils.LocalPaths;
-
 public class PostThatBoard
 {
 	public static final String ROOT_ELEMENT_NAME = "board";
 
 	private final Map<String, PostThat> postThats;
+	private boolean saved;
+	private File source;
 
-	private PostThatBoard(Collection<PostThat> postThats)
+	public PostThatBoard(Collection<PostThat> postThats)
 	{
 		this();
 		this.addAll(postThats);
 	}
 
-	private PostThatBoard()
+	public PostThatBoard()
 	{
 		this.postThats = new HashMap<String, PostThat>();
+		this.saved = true;
 	}
 
+	public void setSource(File source)
+	{
+		this.source = source;
+	}
+	
+	public File getSource()
+	{
+		return this.source;
+	}
+	
+	public String getSourceName()
+	{
+		if(this.source == null)
+		{
+			return null;
+		}
+		else
+		{
+			return this.source.getName();
+		}
+	}
+	
 	public boolean addAll(Collection<PostThat> postThats)
 	{
 		boolean allAdded = true;
@@ -150,7 +173,7 @@ public class PostThatBoard
 			return false;
 		}
 	}
-	
+
 	public Collection<PostThat> getPostThats()
 	{
 		return this.postThats.values();
@@ -161,22 +184,31 @@ public class PostThatBoard
 		this.postThats.clear();
 	}
 	
+	public boolean isSaved()
+	{
+		return this.saved;
+	}
+
 	public boolean save()
 	{
-		File saveFile = LocalPaths.SAVE_FILE.toLocalFile().asFile();
-
 		try
 		{
-			this.createSaveFile();
-
-			Transformer transformer = TransformerFactory.newInstance().newTransformer();
-			transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
-			transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-			transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
-
-			transformer.transform(new DOMSource(PostThatBoard.toXML(this)), new StreamResult(new FileWriter(saveFile)));
-
-			return true;
+			if(this.createSaveFile())
+			{
+					Transformer transformer = TransformerFactory.newInstance().newTransformer();
+					transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
+					transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+					transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
+		
+					transformer.transform(new DOMSource(PostThatBoard.toXML(this)), new StreamResult(new FileWriter(this.source)));
+					
+					this.saved = true;
+					return true;
+			}
+			else
+			{
+				return false;
+			}
 		}
 		catch(IOException | TransformerException | TransformerFactoryConfigurationError e)
 		{
@@ -192,33 +224,48 @@ public class PostThatBoard
 		}).collect(Collectors.joining(", ", "[", "]"));
 	}
 
-	private void createSaveFile() throws IOException
+	private boolean createSaveFile()
 	{
-		File saveFile = LocalPaths.SAVE_FILE.toLocalFile().asFile();
-		
-		if(!saveFile.exists())
+		if(this.source == null)
 		{
-			if(!saveFile.getParentFile().mkdirs())
+			return false;
+		}
+		else
+		{		
+			if(!this.source.exists())
 			{
-				throw new IOException("Dirs " + saveFile.getParent() + " cannot be created");
+				if(!this.source.getParentFile().mkdirs())
+				{
+					return false;
+				}
+	
+				try
+				{
+					if(!this.source.createNewFile())
+					{
+						return false;
+					}
+				}
+				catch(IOException e)
+				{
+					return false;
+				}
 			}
-
-			if(!saveFile.createNewFile())
-			{
-				throw new IOException("File " + saveFile.getAbsolutePath() + " already");
-			}
+			
+			return true;
 		}
 	}
 
-	public static PostThatBoard getSavedBoard()
+	public static PostThatBoard getSavedBoard(File saveFile)
 	{
-		File saveFile = LocalPaths.SAVE_FILE.toLocalFile().asFile();
 		PostThatBoard board = new PostThatBoard();
 
 		if(saveFile.exists())
 		{
 			board.addAll(PostThatBoard.parse(saveFile));
 		}
+		
+		board.setSource(saveFile);
 
 		return board;
 	}

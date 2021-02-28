@@ -7,11 +7,14 @@ import java.awt.event.TextEvent;
 import java.awt.event.TextListener;
 
 import javax.swing.JDesktopPane;
+import javax.swing.JFileChooser;
 import javax.swing.JInternalFrame;
+import javax.swing.JOptionPane;
 import javax.swing.event.InternalFrameEvent;
 
 import post.that.model.PostThat;
 import post.that.model.PostThatBoard;
+import post.that.utils.Translation.Internationalization;
 import post.that.view.adapter.ComponentAdapter;
 import post.that.view.adapter.InternalFrameAdapter;
 import post.that.view.listeners.ColorEvent;
@@ -23,10 +26,16 @@ public class BoardPane extends JDesktopPane implements InternalFrameAdapter, Com
 	private static final long serialVersionUID = 838829298589001150L;
 	private static final Image BACKGROUND = Images.BOARD_BACKGROUND.getDefaultImage();
 
-	private final PostThatBoard board = PostThatBoard.getSavedBoard();
+	private PostThatBoard board;
 
 	public BoardPane()
 	{
+		this(new PostThatBoard());
+	}
+	
+	public BoardPane(PostThatBoard board)
+	{
+		this.board = board;
 		for(PostThat postThat : this.board.getPostThats())
 		{
 			this.addPostThat(postThat);
@@ -35,13 +44,39 @@ public class BoardPane extends JDesktopPane implements InternalFrameAdapter, Com
 
 	public boolean save()
 	{
-		return this.board.save();
+		if(!this.board.save())
+		{
+			int userSelection = JOptionPane.showConfirmDialog(this, Internationalization.get("AUTOMATIC_SAVE_FAIL_KEEP_SAVING"), Internationalization.get("SAVE_ERROR"), JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE);
+			if(userSelection == JOptionPane.YES_OPTION)
+			{
+				JFileChooser fileChooser = new JFileChooser();
+				fileChooser.setDialogTitle(Internationalization.get("SAVE_BOARD"));
+				
+				if(fileChooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION)
+				{
+					this.board.setSource(fileChooser.getSelectedFile());
+					return this.save();
+				}
+				else
+				{
+					return false;
+				}
+			}
+			else
+			{
+				return false;
+			}
+		}
+		else
+		{
+			return true;
+		}
 	}
-	
+
 	public void clear()
 	{
 		this.board.clear();
-		
+
 		for(JInternalFrame frame : this.getAllFrames())
 		{
 			this.getDesktopManager().closeFrame(frame);
@@ -82,7 +117,7 @@ public class BoardPane extends JDesktopPane implements InternalFrameAdapter, Com
 		PostThatFrame frame = (PostThatFrame) event.getSource();
 		this.board.changeContent(frame.getId(), frame.getText());
 	}
-	
+
 	@Override
 	public void colorValueChanged(ColorEvent event)
 	{
@@ -95,6 +130,24 @@ public class BoardPane extends JDesktopPane implements InternalFrameAdapter, Com
 		PostThat postThat = new PostThat();
 		this.board.add(postThat);
 		this.addPostThat(postThat);
+	}
+	
+	public String getSource()
+	{
+		String source = this.board.getSourceName();
+		if(source == null)
+		{
+			return Internationalization.get("NEW_BOARD");
+		}
+		else
+		{
+			return source;
+		}
+	}
+	
+	public boolean isSaved()
+	{
+		return this.board.isSaved();
 	}
 
 	private void addPostThat(PostThat postThat)

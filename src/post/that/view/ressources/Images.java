@@ -17,7 +17,8 @@ public enum Images
 	NOTE_ICON("assets/note.png"),
 	SAVE_ICON("assets/save.png"),
 	CLEAR_ICON("assets/clear.png"),
-	PICKER_ICON("assets/picker.png");
+	PICKER_ICON("assets/picker.png"),
+	NEW_ICON("assets/new.png");
 
 	private BufferedImage image;
 	private boolean loaded;

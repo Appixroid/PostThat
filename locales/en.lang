@@ -13,3 +13,6 @@ VIEW=View
 SHOW_MENU_BAR=Show menu bar
 SHOW_TOOL_BAR=Show tool bar
 UNABLE_TO_SAVE_PREFERENCES=Unable to save preferences
+NEW_BOARD=New Board
+SAVE_BOARD=Save Board
+AUTOMATIC_SAVE_FAIL_KEEP_SAVING=The automatic save of the board fail, do you want to save it in a new location ?
