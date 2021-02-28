@@ -92,9 +92,9 @@ public class MainFrame extends JFrame implements WindowAdapter
 	{
 		JMenuBar menuBar = new JMenuBar();
 
-		menuBar.add(buildFileMenu());
-		menuBar.add(buildBoardMenu());
-		menuBar.add(buildViewMenu(menuBar));
+		menuBar.add(this.buildFileMenu());
+		menuBar.add(this.buildBoardMenu());
+		menuBar.add(this.buildViewMenu(menuBar));
 
 		return menuBar;
 	}
@@ -132,7 +132,7 @@ public class MainFrame extends JFrame implements WindowAdapter
 	{
 		JMenuItem boardMenu = new JMenu(Internationalization.get("BOARD"));
 		boardMenu.setMnemonic(KeyEvent.VK_B);
-		
+
 		JMenuItem addPostThatItem = new JMenuItem(Internationalization.get("CREATE_POST_THAT"));
 		addPostThatItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, InputEvent.CTRL_DOWN_MASK));
 		addPostThatItem.setIcon(Images.NOTE_ICON.getScaledIcon(16, 16));
@@ -140,7 +140,7 @@ public class MainFrame extends JFrame implements WindowAdapter
 			this.tabs.getCurrentBoard().createEmptyPostThat();
 		});
 		boardMenu.add(addPostThatItem);
-		
+
 		JMenuItem clearItem = new JMenuItem(Internationalization.get("CLEAR_BOARD"));
 		clearItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_L, InputEvent.CTRL_DOWN_MASK));
 		clearItem.setIcon(Images.CLEAR_ICON.getScaledIcon(16, 16));
@@ -157,12 +157,12 @@ public class MainFrame extends JFrame implements WindowAdapter
 		viewMenu.setMnemonic(KeyEvent.VK_P);
 
 		JCheckBoxMenuItem menuBarVisibility = new JCheckBoxMenuItem(Internationalization.get("SHOW_MENU_BAR"));
-		menuBarVisibility.setSelected(preferences.getBoolean("SHOW_MENU_BAR", true));
+		menuBarVisibility.setSelected(this.preferences.getBoolean("SHOW_MENU_BAR", true));
 		menuBarVisibility.addActionListener(event -> {
 			boolean selected = menuBarVisibility.isSelected();
 			menuBar.setVisible(selected);
-			preferences.setBoolean("SHOW_MENU_BAR", selected);
-			if(!preferences.save())
+			this.preferences.setBoolean("SHOW_MENU_BAR", selected);
+			if(!this.preferences.save())
 			{
 				JOptionPane.showMessageDialog(this, Internationalization.get("UNABLE_TO_SAVE_PREFERENCES"), Internationalization.get("SAVE_ERROR"), JOptionPane.WARNING_MESSAGE);
 			}
@@ -171,12 +171,12 @@ public class MainFrame extends JFrame implements WindowAdapter
 
 		JCheckBoxMenuItem toolBarVisibility = new JCheckBoxMenuItem(Internationalization.get("SHOW_TOOL_BAR"));
 		toolBarVisibility.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_T, InputEvent.CTRL_DOWN_MASK));
-		toolBarVisibility.setSelected(preferences.getBoolean("SHOW_TOOL_BAR", true));
+		toolBarVisibility.setSelected(this.preferences.getBoolean("SHOW_TOOL_BAR", true));
 		toolBarVisibility.addActionListener(event -> {
 			boolean selected = toolBarVisibility.isSelected();
 			MainFrame.this.toolBar.setVisible(selected);
-			preferences.setBoolean("SHOW_TOOL_BAR", selected);
-			if(!preferences.save())
+			this.preferences.setBoolean("SHOW_TOOL_BAR", selected);
+			if(!this.preferences.save())
 			{
 				JOptionPane.showMessageDialog(this, Internationalization.get("UNABLE_TO_SAVE_PREFERENCES"), Internationalization.get("SAVE_ERROR"), JOptionPane.WARNING_MESSAGE);
 			}

@@ -32,7 +32,7 @@ public class BoardPane extends JDesktopPane implements InternalFrameAdapter, Com
 	{
 		this(new PostThatBoard());
 	}
-	
+
 	public BoardPane(PostThatBoard board)
 	{
 		this.board = board;
@@ -51,7 +51,7 @@ public class BoardPane extends JDesktopPane implements InternalFrameAdapter, Com
 			{
 				JFileChooser fileChooser = new JFileChooser();
 				fileChooser.setDialogTitle(Internationalization.get("SAVE_BOARD"));
-				
+
 				if(fileChooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION)
 				{
 					this.board.setSource(fileChooser.getSelectedFile());
@@ -131,7 +131,7 @@ public class BoardPane extends JDesktopPane implements InternalFrameAdapter, Com
 		this.board.add(postThat);
 		this.addPostThat(postThat);
 	}
-	
+
 	public String getSource()
 	{
 		String source = this.board.getSourceName();
@@ -144,7 +144,7 @@ public class BoardPane extends JDesktopPane implements InternalFrameAdapter, Com
 			return source;
 		}
 	}
-	
+
 	public boolean isSaved()
 	{
 		return this.board.isSaved();

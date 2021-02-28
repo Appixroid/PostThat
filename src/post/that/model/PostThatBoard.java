@@ -51,12 +51,12 @@ public class PostThatBoard
 	{
 		this.source = source;
 	}
-	
+
 	public File getSource()
 	{
 		return this.source;
 	}
-	
+
 	public String getSourceName()
 	{
 		if(this.source == null)
@@ -68,7 +68,7 @@ public class PostThatBoard
 			return this.source.getName();
 		}
 	}
-	
+
 	public boolean addAll(Collection<PostThat> postThats)
 	{
 		boolean allAdded = true;
@@ -183,7 +183,7 @@ public class PostThatBoard
 	{
 		this.postThats.clear();
 	}
-	
+
 	public boolean isSaved()
 	{
 		return this.saved;
@@ -195,15 +195,15 @@ public class PostThatBoard
 		{
 			if(this.createSaveFile())
 			{
-					Transformer transformer = TransformerFactory.newInstance().newTransformer();
-					transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
-					transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-					transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
-		
-					transformer.transform(new DOMSource(PostThatBoard.toXML(this)), new StreamResult(new FileWriter(this.source)));
-					
-					this.saved = true;
-					return true;
+				Transformer transformer = TransformerFactory.newInstance().newTransformer();
+				transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
+				transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+				transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
+
+				transformer.transform(new DOMSource(PostThatBoard.toXML(this)), new StreamResult(new FileWriter(this.source)));
+
+				this.saved = true;
+				return true;
 			}
 			else
 			{
@@ -231,14 +231,14 @@ public class PostThatBoard
 			return false;
 		}
 		else
-		{		
+		{
 			if(!this.source.exists())
 			{
 				if(!this.source.getParentFile().mkdirs())
 				{
 					return false;
 				}
-	
+
 				try
 				{
 					if(!this.source.createNewFile())
@@ -251,7 +251,7 @@ public class PostThatBoard
 					return false;
 				}
 			}
-			
+
 			return true;
 		}
 	}
@@ -264,7 +264,7 @@ public class PostThatBoard
 		{
 			board.addAll(PostThatBoard.parse(saveFile));
 		}
-		
+
 		board.setSource(saveFile);
 
 		return board;
