@@ -15,4 +15,5 @@ SHOW_TOOL_BAR=Montrer la barre d'outils
 UNABLE_TO_SAVE_PREFERENCES=Impossible de sauvegarder les préférences
 NEW_BOARD=Nouveau Tableau
 SAVE_BOARD=Sauvegarde du tableau
-AUTOMATIC_SAVE_FAIL_KEEP_SAVING=La sauvegarde automatique du tableau a échoué, voulez-vous sauvegarder le tableau dans un nouvel endroit ? 
+AUTOMATIC_SAVE_FAIL_KEEP_SAVING=La sauvegarde automatique du tableau a échoué, voulez-vous sauvegarder le tableau dans un nouvel endroit ?
+BOARD=Tableau 

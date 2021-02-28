@@ -92,25 +92,17 @@ public class MainFrame extends JFrame implements WindowAdapter
 	{
 		JMenuBar menuBar = new JMenuBar();
 
+		menuBar.add(buildFileMenu());
+		menuBar.add(buildBoardMenu());
+		menuBar.add(buildViewMenu(menuBar));
+
+		return menuBar;
+	}
+
+	private JMenu buildFileMenu()
+	{
 		JMenu fileMenu = new JMenu(Internationalization.get("FILE"));
 		fileMenu.setMnemonic(KeyEvent.VK_P);
-		menuBar.add(fileMenu);
-
-		JMenuItem addPostThatItem = new JMenuItem(Internationalization.get("CREATE_POST_THAT"));
-		addPostThatItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, InputEvent.CTRL_DOWN_MASK));
-		addPostThatItem.setIcon(Images.NOTE_ICON.getScaledIcon(16, 16));
-		addPostThatItem.addActionListener(event -> {
-			this.tabs.getCurrentBoard().createEmptyPostThat();
-		});
-		fileMenu.add(addPostThatItem);
-
-		JMenuItem clearItem = new JMenuItem(Internationalization.get("CLEAR_BOARD"));
-		clearItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_L, InputEvent.CTRL_DOWN_MASK));
-		clearItem.setIcon(Images.CLEAR_ICON.getScaledIcon(16, 16));
-		clearItem.addActionListener(event -> {
-			this.tabs.getCurrentBoard().clear();
-		});
-		fileMenu.add(clearItem);
 
 		JMenuItem saveItem = new JMenuItem(Internationalization.get("SAVE"));
 		saveItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_DOWN_MASK));
@@ -123,9 +115,46 @@ public class MainFrame extends JFrame implements WindowAdapter
 		});
 		fileMenu.add(saveItem);
 
+		JMenuItem saveAllItem = new JMenuItem(Internationalization.get("SAVE"));
+		saveAllItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_DOWN_MASK | InputEvent.SHIFT_DOWN_MASK));
+		saveAllItem.setIcon(Images.SAVE_ICON.getScaledIcon(16, 16));
+		saveAllItem.addActionListener(event -> {
+			if(!this.tabs.saveAll())
+			{
+				JOptionPane.showMessageDialog(this, Internationalization.get("UNABLE_TO_SAVE_BOARD"), Internationalization.get("SAVE_ERROR"), JOptionPane.WARNING_MESSAGE);
+			}
+		});
+		fileMenu.add(saveAllItem);
+		return fileMenu;
+	}
+
+	private JMenuItem buildBoardMenu()
+	{
+		JMenuItem boardMenu = new JMenu(Internationalization.get("BOARD"));
+		boardMenu.setMnemonic(KeyEvent.VK_B);
+		
+		JMenuItem addPostThatItem = new JMenuItem(Internationalization.get("CREATE_POST_THAT"));
+		addPostThatItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, InputEvent.CTRL_DOWN_MASK));
+		addPostThatItem.setIcon(Images.NOTE_ICON.getScaledIcon(16, 16));
+		addPostThatItem.addActionListener(event -> {
+			this.tabs.getCurrentBoard().createEmptyPostThat();
+		});
+		boardMenu.add(addPostThatItem);
+		
+		JMenuItem clearItem = new JMenuItem(Internationalization.get("CLEAR_BOARD"));
+		clearItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_L, InputEvent.CTRL_DOWN_MASK));
+		clearItem.setIcon(Images.CLEAR_ICON.getScaledIcon(16, 16));
+		clearItem.addActionListener(event -> {
+			this.tabs.getCurrentBoard().clear();
+		});
+		boardMenu.add(clearItem);
+		return boardMenu;
+	}
+
+	private JMenu buildViewMenu(JMenuBar menuBar)
+	{
 		JMenu viewMenu = new JMenu(Internationalization.get("VIEW"));
 		viewMenu.setMnemonic(KeyEvent.VK_P);
-		menuBar.add(viewMenu);
 
 		JCheckBoxMenuItem menuBarVisibility = new JCheckBoxMenuItem(Internationalization.get("SHOW_MENU_BAR"));
 		menuBarVisibility.setSelected(preferences.getBoolean("SHOW_MENU_BAR", true));
@@ -153,8 +182,7 @@ public class MainFrame extends JFrame implements WindowAdapter
 			}
 		});
 		viewMenu.add(toolBarVisibility);
-
-		return menuBar;
+		return viewMenu;
 	}
 
 	private JToolBar buildToolBar()
