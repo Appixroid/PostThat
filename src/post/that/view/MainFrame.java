@@ -104,6 +104,14 @@ public class MainFrame extends JFrame implements WindowAdapter
 		JMenu fileMenu = new JMenu(Internationalization.get("FILE"));
 		fileMenu.setMnemonic(KeyEvent.VK_P);
 
+		JMenuItem createItem = new JMenuItem(Internationalization.get("CREATE_BOARD"));
+		createItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, InputEvent.CTRL_DOWN_MASK));
+		createItem.setIcon(Images.NEW_ICON.getScaledIcon(16, 16));
+		createItem.addActionListener(event -> {
+			this.tabs.addEmptyBoard();
+		});
+		fileMenu.add(createItem);
+		
 		JMenuItem saveItem = new JMenuItem(Internationalization.get("SAVE"));
 		saveItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_DOWN_MASK));
 		saveItem.setIcon(Images.SAVE_ICON.getScaledIcon(16, 16));
@@ -134,7 +142,7 @@ public class MainFrame extends JFrame implements WindowAdapter
 		boardMenu.setMnemonic(KeyEvent.VK_B);
 
 		JMenuItem addPostThatItem = new JMenuItem(Internationalization.get("CREATE_POST_THAT"));
-		addPostThatItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, InputEvent.CTRL_DOWN_MASK));
+		addPostThatItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, InputEvent.CTRL_DOWN_MASK));
 		addPostThatItem.setIcon(Images.NOTE_ICON.getScaledIcon(16, 16));
 		addPostThatItem.addActionListener(event -> {
 			this.tabs.getCurrentBoard().createEmptyPostThat();
