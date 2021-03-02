@@ -28,11 +28,11 @@ import javax.swing.plaf.basic.BasicInternalFrameUI;
 import post.that.model.PostThat;
 import post.that.utils.Translation.Internationalization;
 import post.that.view.adapter.MouseAdapter;
-import post.that.view.listeners.color.ColorEvent;
+import post.that.view.listeners.color.ColorListenable;
 import post.that.view.listeners.color.ColorListener;
 import post.that.view.ressources.Images;
 
-public class PostThatFrame extends JInternalFrame
+public class PostThatFrame extends JInternalFrame implements ColorListenable
 {
 	private static final long serialVersionUID = 1834391632998832385L;
 	private static final Dimension DEFAULT_SIZE = new Dimension(128, 128);
@@ -92,9 +92,10 @@ public class PostThatFrame extends JInternalFrame
 		});
 	}
 
-	public void addColorListener(ColorListener listener)
+	@Override
+	public List<ColorListener> getColorListeners()
 	{
-		this.listeners.add(listener);
+		return this.listeners;
 	}
 
 	public void changeBackground(Color bg)
@@ -103,10 +104,7 @@ public class PostThatFrame extends JInternalFrame
 		this.titleBar.setBackground(bg);
 		this.content.setBackground(bg);
 
-		for(ColorListener listener : this.listeners)
-		{
-			listener.colorValueChanged(new ColorEvent(this));
-		}
+		this.notifyColorChangedToAll(this);
 	}
 
 	private void setup()

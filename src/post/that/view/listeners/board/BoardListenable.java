@@ -11,19 +11,26 @@ public interface BoardListenable
 		this.getBoardListeners().add(listener);
 	}
 	
+	public default void removeBoardListener(BoardListener listener)
+	{
+		this.getBoardListeners().remove(listener);
+	}
+	
 	public default void notifyBoardSavedToAll(Object source)
 	{
+		BoardEvent event = new BoardEvent(source);
 		for(BoardListener listener : this.getBoardListeners())
 		{
-			listener.saved(new BoardEvent(source));
+			listener.saved(event);
 		}
 	}
 	
 	public default void notifyBoardChangedToAll(Object source)
 	{
+		BoardEvent event = new BoardEvent(source);
 		for(BoardListener listener : this.getBoardListeners())
 		{
-			listener.changed(new BoardEvent(source));
+			listener.changed(event);
 		}
 	}
 }
