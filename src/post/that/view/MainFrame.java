@@ -19,6 +19,7 @@ import javax.swing.WindowConstants;
 
 import post.that.utils.Translation.Internationalization;
 import post.that.view.adapter.WindowAdapter;
+import post.that.view.panes.BoardPane;
 import post.that.view.panes.TabbedBoard;
 import post.that.view.preferences.Preferences;
 import post.that.view.ressources.Images;
@@ -124,9 +125,14 @@ public class MainFrame extends JFrame implements WindowAdapter
 		saveItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_DOWN_MASK));
 		saveItem.setIcon(Images.SAVE_ICON.getScaledIcon(16, 16));
 		saveItem.addActionListener(event -> {
-			if(!this.tabs.getCurrentBoard().save())
+			BoardPane currentBoard = this.tabs.getCurrentBoard();
+			
+			if(currentBoard != null)
 			{
-				JOptionPane.showMessageDialog(this, Internationalization.get("UNABLE_TO_SAVE_BOARD"), Internationalization.get("SAVE_ERROR"), JOptionPane.WARNING_MESSAGE);
+				if(!currentBoard.save())
+				{
+					JOptionPane.showMessageDialog(this, Internationalization.get("UNABLE_TO_SAVE_BOARD"), Internationalization.get("SAVE_ERROR"), JOptionPane.WARNING_MESSAGE);
+				}
 			}
 		});
 		fileMenu.add(saveItem);
@@ -153,7 +159,12 @@ public class MainFrame extends JFrame implements WindowAdapter
 		closeBoardItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_W, InputEvent.CTRL_DOWN_MASK));
 		closeBoardItem.setIcon(Images.CLOSE_TAB_ICON.getScaledIcon(16, 16));
 		closeBoardItem.addActionListener(event -> {
-			this.tabs.close(this.tabs.getCurrentBoard());
+			BoardPane currentBoard = this.tabs.getCurrentBoard();
+			
+			if(currentBoard != null)
+			{				
+				this.tabs.close(currentBoard);
+			}
 		});
 		boardMenu.add(closeBoardItem);
 
@@ -161,7 +172,11 @@ public class MainFrame extends JFrame implements WindowAdapter
 		addPostThatItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, InputEvent.CTRL_DOWN_MASK));
 		addPostThatItem.setIcon(Images.NOTE_ICON.getScaledIcon(16, 16));
 		addPostThatItem.addActionListener(event -> {
-			this.tabs.getCurrentBoard().createEmptyPostThat();
+			BoardPane currentBoard = this.tabs.getCurrentBoard();
+			if(currentBoard != null)
+			{
+				currentBoard.createEmptyPostThat();
+			}
 		});
 		boardMenu.add(addPostThatItem);
 
@@ -169,7 +184,12 @@ public class MainFrame extends JFrame implements WindowAdapter
 		clearItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_L, InputEvent.CTRL_DOWN_MASK));
 		clearItem.setIcon(Images.CLEAR_ICON.getScaledIcon(16, 16));
 		clearItem.addActionListener(event -> {
-			this.tabs.getCurrentBoard().clear();
+			BoardPane currentBoard = this.tabs.getCurrentBoard();
+			
+			if(currentBoard != null)
+			{
+				currentBoard.clear();
+			}
 		});
 		boardMenu.add(clearItem);
 		return boardMenu;
@@ -215,21 +235,36 @@ public class MainFrame extends JFrame implements WindowAdapter
 
 		JButton addPostThatButton = new JButton(Images.NOTE_ICON.getScaledIcon(16, 16));
 		addPostThatButton.addActionListener(event -> {
-			this.tabs.getCurrentBoard().createEmptyPostThat();
+			BoardPane currentBoard = this.tabs.getCurrentBoard();
+			
+			if(currentBoard != null)
+			{
+				currentBoard.createEmptyPostThat();
+			}
 		});
 		toolBar.add(addPostThatButton);
 
 		JButton clearButton = new JButton(Images.CLEAR_ICON.getScaledIcon(16, 16));
 		clearButton.addActionListener(event -> {
-			this.tabs.getCurrentBoard().clear();
+			BoardPane currentBoard = this.tabs.getCurrentBoard();
+			
+			if(currentBoard != null)
+			{
+				currentBoard.clear();
+			}
 		});
 		toolBar.add(clearButton);
 
 		JButton saveButton = new JButton(Images.SAVE_ICON.getScaledIcon(16, 16));
 		saveButton.addActionListener(event -> {
-			if(!this.tabs.getCurrentBoard().save())
+			BoardPane currentBoard = this.tabs.getCurrentBoard();
+			
+			if(currentBoard != null)
 			{
-				JOptionPane.showMessageDialog(this, Internationalization.get("UNABLE_TO_SAVE_BOARD"), Internationalization.get("SAVE_ERROR"), JOptionPane.WARNING_MESSAGE);
+				if(!currentBoard.save())
+				{
+					JOptionPane.showMessageDialog(this, Internationalization.get("UNABLE_TO_SAVE_BOARD"), Internationalization.get("SAVE_ERROR"), JOptionPane.WARNING_MESSAGE);
+				}
 			}
 		});
 		toolBar.add(saveButton);
