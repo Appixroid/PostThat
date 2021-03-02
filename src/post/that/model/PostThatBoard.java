@@ -288,6 +288,7 @@ public class PostThatBoard
 		}
 
 		board.setSource(saveFile);
+		board.saved = true;
 
 		return board;
 	}

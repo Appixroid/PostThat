@@ -5,6 +5,7 @@ import java.awt.Image;
 import java.awt.event.ComponentEvent;
 import java.awt.event.TextEvent;
 import java.awt.event.TextListener;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -39,6 +40,11 @@ public class BoardPane extends JDesktopPane implements InternalFrameAdapter, Com
 		this(new PostThatBoard());
 	}
 
+	public BoardPane(File sourceBoard)
+	{
+		this(PostThatBoard.getSavedBoard(sourceBoard));
+	}
+	
 	public BoardPane(PostThatBoard board)
 	{
 		this.listeners = new ArrayList<BoardListener>();

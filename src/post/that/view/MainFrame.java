@@ -112,6 +112,14 @@ public class MainFrame extends JFrame implements WindowAdapter
 		});
 		fileMenu.add(createItem);
 
+		JMenuItem openItem = new JMenuItem(Internationalization.get("OPEN_BOARD"));
+		openItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, InputEvent.CTRL_DOWN_MASK));
+		openItem.setIcon(Images.IMPORT_ICON.getScaledIcon(16, 16));
+		openItem.addActionListener(event -> {
+			this.tabs.openBoard();
+		});
+		fileMenu.add(openItem);
+		
 		JMenuItem saveItem = new JMenuItem(Internationalization.get("SAVE"));
 		saveItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_DOWN_MASK));
 		saveItem.setIcon(Images.SAVE_ICON.getScaledIcon(16, 16));
