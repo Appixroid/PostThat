@@ -6,6 +6,7 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.TextEvent;
 import java.awt.event.TextListener;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.swing.JDesktopPane;
@@ -42,10 +43,7 @@ public class BoardPane extends JDesktopPane implements InternalFrameAdapter, Com
 	{
 		this.listeners = new ArrayList<BoardListener>();
 		this.board = board;
-		for(PostThat postThat : this.board.getPostThats())
-		{
-			this.addPostThat(postThat);
-		}
+		this.addAll(this.board.getPostThats());
 	}
 	
 	@Override
@@ -164,7 +162,7 @@ public class BoardPane extends JDesktopPane implements InternalFrameAdapter, Com
 	{
 		PostThat postThat = new PostThat();
 		this.board.add(postThat);
-		this.addPostThat(postThat);
+		this.add(postThat);
 		this.notifyBoardChangedToAll(this);
 	}
 
@@ -185,8 +183,16 @@ public class BoardPane extends JDesktopPane implements InternalFrameAdapter, Com
 	{
 		return this.board.isSaved();
 	}
+	
+	private void addAll(Collection<PostThat> postThats)
+	{
+		for(PostThat postThat : postThats)
+		{
+			this.add(postThat);
+		}
+	}
 
-	private void addPostThat(PostThat postThat)
+	private void add(PostThat postThat)
 	{
 		PostThatFrame postThatPane = new PostThatFrame(postThat);
 		postThatPane.addInternalFrameListener(this);
