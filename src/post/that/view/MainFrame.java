@@ -268,6 +268,17 @@ public class MainFrame extends JFrame implements WindowAdapter
 			}
 		});
 		toolBar.add(saveButton);
+		
+		JButton closeBoardButton = new JButton(Images.CLOSE_TAB_ICON.getScaledIcon(16, 16));
+		closeBoardButton.addActionListener(event -> {
+			BoardPane currentBoard = this.tabs.getCurrentBoard();
+			
+			if(currentBoard != null)
+			{
+				this.tabs.close(this.tabs.getCurrentBoard());
+			}
+		});
+		toolBar.add(closeBoardButton);
 
 		toolBar.setVisible(Preferences.getInstance().getBoolean("SHOW_TOOL_BAR", true));
 
