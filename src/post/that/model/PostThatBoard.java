@@ -39,6 +39,7 @@ public class PostThatBoard
 	{
 		this();
 		this.addAll(postThats);
+		this.saved = true;
 	}
 
 	public PostThatBoard()
@@ -100,6 +101,8 @@ public class PostThatBoard
 		if(!this.postThats.containsKey(postThat.getId()))
 		{
 			this.postThats.put(postThat.getId(), postThat);
+			this.saved = false;
+
 			return true;
 		}
 		else
@@ -115,7 +118,14 @@ public class PostThatBoard
 
 	public PostThat remove(String id)
 	{
-		return this.postThats.remove(id);
+		PostThat postThat = this.postThats.remove(id);
+
+		if(postThat != null)
+		{
+			this.saved = false;
+		}
+
+		return postThat;
 	}
 
 	public boolean resize(String id, int newWidth, int newHeight)
@@ -124,6 +134,8 @@ public class PostThatBoard
 		if(postThat != null)
 		{
 			postThat.resize(newWidth, newHeight);
+			this.saved = false;
+
 			return true;
 		}
 		else
@@ -138,6 +150,8 @@ public class PostThatBoard
 		if(postThat != null)
 		{
 			postThat.move(newX, newY);
+			this.saved = false;
+
 			return true;
 		}
 		else
@@ -152,6 +166,8 @@ public class PostThatBoard
 		if(postThat != null)
 		{
 			postThat.setContent(content);
+			this.saved = false;
+
 			return true;
 		}
 		else
@@ -166,6 +182,8 @@ public class PostThatBoard
 		if(postThat != null)
 		{
 			postThat.setColor(color);
+			this.saved = false;
+
 			return true;
 		}
 		else
@@ -181,7 +199,11 @@ public class PostThatBoard
 
 	public void clear()
 	{
-		this.postThats.clear();
+		if(this.postThats.size() > 0)
+		{
+			this.postThats.clear();
+			this.saved = false;
+		}
 	}
 
 	public boolean isSaved()

@@ -28,8 +28,8 @@ import javax.swing.plaf.basic.BasicInternalFrameUI;
 import post.that.model.PostThat;
 import post.that.utils.Translation.Internationalization;
 import post.that.view.adapter.MouseAdapter;
-import post.that.view.listeners.ColorEvent;
-import post.that.view.listeners.ColorListener;
+import post.that.view.listeners.color.ColorEvent;
+import post.that.view.listeners.color.ColorListener;
 import post.that.view.ressources.Images;
 
 public class PostThatFrame extends JInternalFrame

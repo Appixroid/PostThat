@@ -1,4 +1,4 @@
-package post.that.view.listeners;
+package post.that.view.listeners.color;
 
 public interface ColorListener
 {

@@ -1,4 +1,4 @@
-package post.that.view.listeners;
+package post.that.view.listeners.color;
 
 import java.awt.AWTEvent;
 

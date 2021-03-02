@@ -47,7 +47,7 @@ public class MainFrame extends JFrame implements WindowAdapter
 	@Override
 	public void windowClosing(WindowEvent event)
 	{
-		if(this.tabs.saveAll())
+		if(this.tabs.closeAll())
 		{
 			System.exit(0);
 		}
@@ -111,7 +111,7 @@ public class MainFrame extends JFrame implements WindowAdapter
 			this.tabs.addEmptyBoard();
 		});
 		fileMenu.add(createItem);
-		
+
 		JMenuItem saveItem = new JMenuItem(Internationalization.get("SAVE"));
 		saveItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_DOWN_MASK));
 		saveItem.setIcon(Images.SAVE_ICON.getScaledIcon(16, 16));
