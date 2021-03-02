@@ -18,3 +18,4 @@ SAVE_BOARD=Sauvegarde du tableau
 AUTOMATIC_SAVE_FAIL_KEEP_SAVING=La sauvegarde automatique du tableau a échoué, voulez-vous sauvegarder le tableau dans un nouvel endroit ?
 BOARD=Tableau
 OPEN_BOARD=Ouvrir un tableau
+CLOSE_BOARD=Fermer le tableau

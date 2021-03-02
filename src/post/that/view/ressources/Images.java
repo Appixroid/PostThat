@@ -19,7 +19,8 @@ public enum Images
 	CLEAR_ICON("assets/clear.png"),
 	PICKER_ICON("assets/picker.png"),
 	NEW_ICON("assets/new.png"),
-	IMPORT_ICON("assets/import.png");
+	IMPORT_ICON("assets/import.png"),
+	CLOSE_TAB_ICON("assets/close_tab.png");
 
 	private BufferedImage image;
 	private boolean loaded;

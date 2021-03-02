@@ -148,6 +148,14 @@ public class MainFrame extends JFrame implements WindowAdapter
 	{
 		JMenuItem boardMenu = new JMenu(Internationalization.get("BOARD"));
 		boardMenu.setMnemonic(KeyEvent.VK_B);
+		
+		JMenuItem closeBoardItem = new JMenuItem(Internationalization.get("CLOSE_BOARD"));
+		closeBoardItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_W, InputEvent.CTRL_DOWN_MASK));
+		closeBoardItem.setIcon(Images.CLOSE_TAB_ICON.getScaledIcon(16, 16));
+		closeBoardItem.addActionListener(event -> {
+			this.tabs.close(this.tabs.getCurrentBoard());
+		});
+		boardMenu.add(closeBoardItem);
 
 		JMenuItem addPostThatItem = new JMenuItem(Internationalization.get("CREATE_POST_THAT"));
 		addPostThatItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, InputEvent.CTRL_DOWN_MASK));
