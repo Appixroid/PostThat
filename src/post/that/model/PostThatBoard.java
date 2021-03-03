@@ -266,28 +266,38 @@ public class PostThatBoard
 		}
 		else
 		{
-			if(!this.source.exists())
+			return createSourceFile();
+		}
+	}
+
+	private boolean createSourceFile()
+	{
+		if(!this.source.exists())
+		{
+			return createSourceFileWithParents();
+		}
+		else
+		{
+			return true;
+		}
+	}
+
+	private boolean createSourceFileWithParents()
+	{
+		if(this.source.getParentFile().exists() || this.source.getParentFile().mkdirs())
+		{
+			try
 			{
-				if(this.source.getParentFile().exists() || this.source.getParentFile().mkdirs())
-				{
-					try
-					{
-						return this.source.createNewFile();
-					}
-					catch(IOException e)
-					{
-						return false;
-					}
-				}
-				else
-				{
-					return false;
-				}
+				return this.source.createNewFile();
 			}
-			else
+			catch(IOException e)
 			{
-				return true;
+				return false;
 			}
+		}
+		else
+		{
+			return false;
 		}
 	}
 
