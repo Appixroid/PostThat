@@ -60,7 +60,7 @@ public class BoardPane extends JDesktopPane implements InternalFrameAdapter, Com
 
 	public boolean save()
 	{
-		boolean saved;
+		boolean saved = false;
 		
 		if(this.board.isSaved())
 		{
@@ -68,7 +68,8 @@ public class BoardPane extends JDesktopPane implements InternalFrameAdapter, Com
 		}
 		else
 		{
-			if(!this.board.save())
+			boolean saveAchieved = this.board.save();
+			if(!saveAchieved)
 			{
 				int userSelection = JOptionPane.showConfirmDialog(this, Internationalization.get("AUTOMATIC_SAVE_FAIL_KEEP_SAVING"), Internationalization.get("SAVE_ERROR"), JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE);
 				if(userSelection == JOptionPane.YES_OPTION)

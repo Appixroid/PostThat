@@ -256,25 +256,26 @@ public class PostThatBoard
 		{
 			if(!this.source.exists())
 			{
-				if(!this.source.getParentFile().mkdirs())
+				if(this.source.getParentFile().exists() || this.source.getParentFile().mkdirs())
 				{
-					return false;
-				}
-
-				try
-				{
-					if(!this.source.createNewFile())
+					try
+					{
+						return this.source.createNewFile();
+					}
+					catch(IOException e)
 					{
 						return false;
 					}
 				}
-				catch(IOException e)
+				else
 				{
 					return false;
 				}
 			}
-
-			return true;
+			else
+			{
+				return true;				
+			}
 		}
 	}
 

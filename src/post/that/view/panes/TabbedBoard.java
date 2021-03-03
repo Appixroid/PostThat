@@ -131,6 +131,7 @@ public class TabbedBoard extends JPanel implements BoardListener
 	public void setSaved(BoardPane board)
 	{
 		this.setIcon(board, null);
+		this.tabs.setTitleAt(this.getBoards().indexOf(board), board.getSource());
 	}
 
 	public void setModified(BoardPane board)
