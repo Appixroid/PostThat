@@ -189,42 +189,42 @@ public class Preferences
 	{
 		this.preferences.put(key, Boolean.toString(value));
 	}
-	
+
 	public Collection<String> getCollection(String key)
 	{
 		return this.getCollection(key, Collections.emptyList());
 	}
-	
+
 	public Collection<String> getCollection(String key, Collection<String> defaultValue)
 	{
 		String values = this.preferences.get(key);
 
 		if(values != null)
 		{
-			return Arrays.asList(values.split(COLLECTION_STRINGIFY_SEPARATOR));
+			return Arrays.asList(values.split(Preferences.COLLECTION_STRINGIFY_SEPARATOR));
 		}
 		else
 		{
 			return defaultValue;
 		}
 	}
-	
+
 	public <T> Collection<T> getCollection(String key, Function<String, T> mapper)
 	{
 		return this.getCollection(key, mapper, Collections.emptyList());
 	}
-	
+
 	public <T> Collection<T> getCollection(String key, Function<String, T> mapper, Collection<T> defaultValue)
-	{		
+	{
 		String values = this.preferences.get(key);
 		if(values != null)
 		{
 			Collection<T> list = new ArrayList<T>();
-			for(String value : values.split(COLLECTION_STRINGIFY_SEPARATOR))
+			for(String value : values.split(Preferences.COLLECTION_STRINGIFY_SEPARATOR))
 			{
 				list.add(mapper.apply(value));
 			}
-			
+
 			return list;
 		}
 		else
@@ -232,15 +232,17 @@ public class Preferences
 			return defaultValue;
 		}
 	}
-	
+
 	public void setCollection(String key, Object... collections)
 	{
 		this.setCollection(key, Arrays.asList(collections));
 	}
-	
+
 	public void setCollection(String key, Collection<?> collections)
 	{
-		this.preferences.put(key, collections.stream().map(item -> { return item.toString(); }).collect(Collectors.joining(COLLECTION_STRINGIFY_SEPARATOR)));
+		this.preferences.put(key, collections.stream().map(item -> {
+			return item.toString();
+		}).collect(Collectors.joining(Preferences.COLLECTION_STRINGIFY_SEPARATOR)));
 	}
 
 	public boolean save()

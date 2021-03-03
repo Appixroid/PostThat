@@ -123,13 +123,13 @@ public class MainFrame extends JFrame implements WindowAdapter
 			this.tabs.openBoard();
 		});
 		fileMenu.add(openItem);
-		
+
 		JMenuItem saveItem = new JMenuItem(Internationalization.get("SAVE"));
 		saveItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_DOWN_MASK));
 		saveItem.setIcon(Images.SAVE_ICON.getScaledIcon(16, 16));
 		saveItem.addActionListener(event -> {
 			BoardPane currentBoard = this.tabs.getCurrentBoard();
-			
+
 			if(currentBoard != null)
 			{
 				if(!currentBoard.save())
@@ -157,15 +157,15 @@ public class MainFrame extends JFrame implements WindowAdapter
 	{
 		JMenuItem boardMenu = new JMenu(Internationalization.get("BOARD"));
 		boardMenu.setMnemonic(KeyEvent.VK_B);
-		
+
 		JMenuItem closeBoardItem = new JMenuItem(Internationalization.get("CLOSE_BOARD"));
 		closeBoardItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_W, InputEvent.CTRL_DOWN_MASK));
 		closeBoardItem.setIcon(Images.CLOSE_TAB_ICON.getScaledIcon(16, 16));
 		closeBoardItem.addActionListener(event -> {
 			BoardPane currentBoard = this.tabs.getCurrentBoard();
-			
+
 			if(currentBoard != null)
-			{				
+			{
 				this.tabs.close(currentBoard);
 			}
 		});
@@ -188,7 +188,7 @@ public class MainFrame extends JFrame implements WindowAdapter
 		clearItem.setIcon(Images.CLEAR_ICON.getScaledIcon(16, 16));
 		clearItem.addActionListener(event -> {
 			BoardPane currentBoard = this.tabs.getCurrentBoard();
-			
+
 			if(currentBoard != null)
 			{
 				currentBoard.clear();
@@ -239,7 +239,7 @@ public class MainFrame extends JFrame implements WindowAdapter
 		JButton addPostThatButton = new JButton(Images.NOTE_ICON.getScaledIcon(16, 16));
 		addPostThatButton.addActionListener(event -> {
 			BoardPane currentBoard = this.tabs.getCurrentBoard();
-			
+
 			if(currentBoard != null)
 			{
 				currentBoard.createEmptyPostThat();
@@ -250,7 +250,7 @@ public class MainFrame extends JFrame implements WindowAdapter
 		JButton clearButton = new JButton(Images.CLEAR_ICON.getScaledIcon(16, 16));
 		clearButton.addActionListener(event -> {
 			BoardPane currentBoard = this.tabs.getCurrentBoard();
-			
+
 			if(currentBoard != null)
 			{
 				currentBoard.clear();
@@ -261,7 +261,7 @@ public class MainFrame extends JFrame implements WindowAdapter
 		JButton saveButton = new JButton(Images.SAVE_ICON.getScaledIcon(16, 16));
 		saveButton.addActionListener(event -> {
 			BoardPane currentBoard = this.tabs.getCurrentBoard();
-			
+
 			if(currentBoard != null)
 			{
 				if(!currentBoard.save())
@@ -271,11 +271,11 @@ public class MainFrame extends JFrame implements WindowAdapter
 			}
 		});
 		toolBar.add(saveButton);
-		
+
 		JButton closeBoardButton = new JButton(Images.CLOSE_TAB_ICON.getScaledIcon(16, 16));
 		closeBoardButton.addActionListener(event -> {
 			BoardPane currentBoard = this.tabs.getCurrentBoard();
-			
+
 			if(currentBoard != null)
 			{
 				this.tabs.close(this.tabs.getCurrentBoard());

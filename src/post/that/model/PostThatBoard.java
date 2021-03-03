@@ -69,7 +69,7 @@ public class PostThatBoard
 			return null;
 		}
 	}
-	
+
 	public String getSourceName()
 	{
 		if(this.source == null)
@@ -286,7 +286,7 @@ public class PostThatBoard
 			}
 			else
 			{
-				return true;				
+				return true;
 			}
 		}
 	}

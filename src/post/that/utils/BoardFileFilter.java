@@ -9,7 +9,7 @@ import post.that.utils.Translation.Internationalization;
 public class BoardFileFilter extends FileFilter
 {
 	private static final String POST_THAT_BOARD_FILE_EXTENSION = "pbx";
-	
+
 	@Override
 	public boolean accept(File file)
 	{
@@ -19,13 +19,13 @@ public class BoardFileFilter extends FileFilter
 		}
 		else
 		{
-			return file.getName().toLowerCase().endsWith("." + POST_THAT_BOARD_FILE_EXTENSION);
+			return file.getName().toLowerCase().endsWith("." + BoardFileFilter.POST_THAT_BOARD_FILE_EXTENSION);
 		}
 	}
 
 	@Override
 	public String getDescription()
 	{
-		return Internationalization.get("POST_THAT_BOARD_FILE") + " (*." + POST_THAT_BOARD_FILE_EXTENSION + ")";
+		return Internationalization.get("POST_THAT_BOARD_FILE") + " (*." + BoardFileFilter.POST_THAT_BOARD_FILE_EXTENSION + ")";
 	}
 }

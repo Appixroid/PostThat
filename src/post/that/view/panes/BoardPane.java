@@ -43,14 +43,14 @@ public class BoardPane extends JDesktopPane implements InternalFrameAdapter, Com
 	{
 		this(PostThatBoard.getSavedBoard(sourceBoard));
 	}
-	
+
 	public BoardPane(PostThatBoard board)
 	{
 		this.listeners = new ArrayList<BoardListener>();
 		this.board = board;
 		this.addAll(this.board.getPostThats());
 	}
-	
+
 	@Override
 	public List<BoardListener> getBoardListeners()
 	{
@@ -60,7 +60,7 @@ public class BoardPane extends JDesktopPane implements InternalFrameAdapter, Com
 	public boolean save()
 	{
 		boolean saved = false;
-		
+
 		if(this.board.isSaved())
 		{
 			saved = true;
@@ -94,12 +94,12 @@ public class BoardPane extends JDesktopPane implements InternalFrameAdapter, Com
 				saved = true;
 			}
 		}
-		
+
 		if(saved)
 		{
 			this.notifyBoardSavedToAll(this);
 		}
-		
+
 		return saved;
 	}
 
@@ -111,7 +111,7 @@ public class BoardPane extends JDesktopPane implements InternalFrameAdapter, Com
 		{
 			this.getDesktopManager().closeFrame(frame);
 		}
-		
+
 		this.notifyBoardChangedToAll(this);
 	}
 
@@ -182,7 +182,7 @@ public class BoardPane extends JDesktopPane implements InternalFrameAdapter, Com
 			return source;
 		}
 	}
-	
+
 	public String getSource()
 	{
 		return this.board.getFullSource();
@@ -192,7 +192,7 @@ public class BoardPane extends JDesktopPane implements InternalFrameAdapter, Com
 	{
 		return this.board.isSaved();
 	}
-	
+
 	private void addAll(Collection<PostThat> postThats)
 	{
 		for(PostThat postThat : postThats)
