@@ -19,3 +19,4 @@ AUTOMATIC_SAVE_FAIL_KEEP_SAVING=The automatic save of the board fail, do you wan
 BOARD=Board
 OPEN_BOARD=Open Board
 CLOSE_BOARD=Close Board
+POST_THAT_BOARD_FILE=Post That Board file

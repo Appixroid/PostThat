@@ -11,7 +11,6 @@ import java.util.Collection;
 import java.util.List;
 
 import javax.swing.JDesktopPane;
-import javax.swing.JFileChooser;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 import javax.swing.event.InternalFrameEvent;
@@ -74,12 +73,10 @@ public class BoardPane extends JDesktopPane implements InternalFrameAdapter, Com
 				int userSelection = JOptionPane.showConfirmDialog(this, Internationalization.get("AUTOMATIC_SAVE_FAIL_KEEP_SAVING"), Internationalization.get("SAVE_ERROR"), JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE);
 				if(userSelection == JOptionPane.YES_OPTION)
 				{
-					JFileChooser fileChooser = new JFileChooser();
-					fileChooser.setDialogTitle(Internationalization.get("SAVE_BOARD"));
-
-					if(fileChooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION)
+					File saveFile = BoardFileDialog.getSaveFile(this);
+					if(saveFile != null)
 					{
-						this.board.setSource(fileChooser.getSelectedFile());
+						this.board.setSource(saveFile);
 						saved = this.save();
 					}
 					else

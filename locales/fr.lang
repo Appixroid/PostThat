@@ -19,3 +19,4 @@ AUTOMATIC_SAVE_FAIL_KEEP_SAVING=La sauvegarde automatique du tableau a échoué,
 BOARD=Tableau
 OPEN_BOARD=Ouvrir un tableau
 CLOSE_BOARD=Fermer le tableau
+POST_THAT_BOARD_FILE=Fichier de tableau Post That

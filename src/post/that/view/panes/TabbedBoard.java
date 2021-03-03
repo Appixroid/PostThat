@@ -1,15 +1,14 @@
 package post.that.view.panes;
 
 import java.awt.BorderLayout;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.Icon;
-import javax.swing.JFileChooser;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
-import post.that.utils.Translation.Internationalization;
 import post.that.view.listeners.board.BoardEvent;
 import post.that.view.listeners.board.BoardListener;
 import post.that.view.ressources.Images;
@@ -33,12 +32,10 @@ public class TabbedBoard extends JPanel implements BoardListener
 
 	public void openBoard()
 	{
-		JFileChooser chooser = new JFileChooser();
-		chooser.setDialogTitle(Internationalization.get("OPEN_BOARD"));
-		
-		if(chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION)
+		File boardFile = BoardFileDialog.getLoadFile(this);
+		if(boardFile != null)
 		{
-			this.addBoard(new BoardPane(chooser.getSelectedFile()));
+			this.addBoard(new BoardPane(boardFile));
 		}
 		
 	}
