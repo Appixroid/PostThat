@@ -2,15 +2,23 @@ package post.that.view.preferences;
 
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import post.that.utils.LocalPaths;
 
 public class Preferences
 {
+	private static final String COLLECTION_STRINGIFY_SEPARATOR = ";";
+
 	private static final Preferences instance = new Preferences();
 
 	private Map<String, String> preferences = new HashMap<String, String>();
@@ -180,6 +188,59 @@ public class Preferences
 	public void setBoolean(String key, boolean value)
 	{
 		this.preferences.put(key, Boolean.toString(value));
+	}
+	
+	public Collection<String> getCollection(String key)
+	{
+		return this.getCollection(key, Collections.emptyList());
+	}
+	
+	public Collection<String> getCollection(String key, Collection<String> defaultValue)
+	{
+		String values = this.preferences.get(key);
+
+		if(values != null)
+		{
+			return Arrays.asList(values.split(COLLECTION_STRINGIFY_SEPARATOR));
+		}
+		else
+		{
+			return defaultValue;
+		}
+	}
+	
+	public <T> Collection<T> getCollection(String key, Function<String, T> mapper)
+	{
+		return this.getCollection(key, mapper, Collections.emptyList());
+	}
+	
+	public <T> Collection<T> getCollection(String key, Function<String, T> mapper, Collection<T> defaultValue)
+	{		
+		String values = this.preferences.get(key);
+		if(values != null)
+		{
+			Collection<T> list = new ArrayList<T>();
+			for(String value : values.split(COLLECTION_STRINGIFY_SEPARATOR))
+			{
+				list.add(mapper.apply(value));
+			}
+			
+			return list;
+		}
+		else
+		{
+			return defaultValue;
+		}
+	}
+	
+	public void setCollection(String key, Object... collections)
+	{
+		this.setCollection(key, Arrays.asList(collections));
+	}
+	
+	public void setCollection(String key, Collection<?> collections)
+	{
+		this.preferences.put(key, collections.stream().map(item -> { return item.toString(); }).collect(Collectors.joining(COLLECTION_STRINGIFY_SEPARATOR)));
 	}
 
 	public boolean save()

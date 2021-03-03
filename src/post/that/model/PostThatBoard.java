@@ -58,6 +58,18 @@ public class PostThatBoard
 		return this.source;
 	}
 
+	public String getFullSource()
+	{
+		if(this.source != null)
+		{
+			return this.source.getAbsolutePath();
+		}
+		else
+		{
+			return null;
+		}
+	}
+	
 	public String getSourceName()
 	{
 		if(this.source == null)

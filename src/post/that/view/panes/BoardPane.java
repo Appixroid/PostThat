@@ -170,7 +170,7 @@ public class BoardPane extends JDesktopPane implements InternalFrameAdapter, Com
 		this.notifyBoardChangedToAll(this);
 	}
 
-	public String getSource()
+	public String getDisplaySource()
 	{
 		String source = this.board.getSourceName();
 		if(source == null)
@@ -181,6 +181,11 @@ public class BoardPane extends JDesktopPane implements InternalFrameAdapter, Com
 		{
 			return source;
 		}
+	}
+	
+	public String getSource()
+	{
+		return this.board.getFullSource();
 	}
 
 	public boolean isSaved()

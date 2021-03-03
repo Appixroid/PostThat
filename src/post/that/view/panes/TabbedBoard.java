@@ -3,6 +3,7 @@ package post.that.view.panes;
 import java.awt.BorderLayout;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.swing.Icon;
@@ -11,10 +12,13 @@ import javax.swing.JTabbedPane;
 
 import post.that.view.listeners.board.BoardEvent;
 import post.that.view.listeners.board.BoardListener;
+import post.that.view.preferences.Preferences;
 import post.that.view.ressources.Images;
 
 public class TabbedBoard extends JPanel implements BoardListener
 {
+	private static final String OPEN_BOARDS_SETTINGS = "OPEN_BOARDS";
+
 	private static final long serialVersionUID = -9180673147053998822L;
 
 	private JTabbedPane tabs = new JTabbedPane();
@@ -23,6 +27,20 @@ public class TabbedBoard extends JPanel implements BoardListener
 	{
 		this.setLayout(new BorderLayout());
 		this.add(this.tabs, BorderLayout.CENTER);
+
+		Collection<String> openBoards = Preferences.getInstance().getCollection(OPEN_BOARDS_SETTINGS);
+
+		if(openBoards.size() > 0)
+		{
+			for(String board : openBoards)
+			{
+				this.addBoard(new BoardPane(new File(board)));
+			}
+		}
+		else
+		{
+			this.addEmptyBoard();
+		}
 	}
 
 	public void addEmptyBoard()
@@ -37,12 +55,12 @@ public class TabbedBoard extends JPanel implements BoardListener
 		{
 			this.addBoard(new BoardPane(boardFile));
 		}
-		
+
 	}
-	
+
 	public void addBoard(BoardPane board)
 	{
-		this.tabs.addTab(board.getSource(), null, board);
+		this.tabs.addTab(board.getDisplaySource(), null, board);
 		board.addBoardListener(this);
 	}
 
@@ -113,12 +131,33 @@ public class TabbedBoard extends JPanel implements BoardListener
 		return allSaved;
 	}
 	
+	public void saveTabsSources()
+	{
+		Preferences.getInstance().setCollection(OPEN_BOARDS_SETTINGS, this.getTabsSources());
+	}
+	
+	public List<String> getTabsSources()
+	{
+		List<String> sources = new ArrayList<String>();
+		
+		for(BoardPane board : this.getBoards())
+		{
+			String source = board.getSource();
+			if(source != null)
+			{
+				sources.add(source);
+			}
+		}
+		
+		return sources;
+	}
+
 	@Override
 	public void saved(BoardEvent event)
 	{
 		this.setSaved((BoardPane) event.getSource());
 	}
-	
+
 	@Override
 	public void changed(BoardEvent event)
 	{
@@ -128,7 +167,7 @@ public class TabbedBoard extends JPanel implements BoardListener
 	public void setSaved(BoardPane board)
 	{
 		this.setIcon(board, null);
-		this.tabs.setTitleAt(this.getBoards().indexOf(board), board.getSource());
+		this.tabs.setTitleAt(this.getBoards().indexOf(board), board.getDisplaySource());
 	}
 
 	public void setModified(BoardPane board)

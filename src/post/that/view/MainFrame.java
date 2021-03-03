@@ -48,8 +48,10 @@ public class MainFrame extends JFrame implements WindowAdapter
 	@Override
 	public void windowClosing(WindowEvent event)
 	{
-		if(this.tabs.closeAll())
+		if(this.tabs.saveAll())
 		{
+			this.tabs.saveTabsSources();
+			Preferences.getInstance().save();
 			System.exit(0);
 		}
 		else
@@ -57,6 +59,8 @@ public class MainFrame extends JFrame implements WindowAdapter
 			int userSelection = JOptionPane.showConfirmDialog(this, Internationalization.get("CONFIRM_EXIT_WITH_SAVE_ERROR"), Internationalization.get("SAVE_ERROR"), JOptionPane.ERROR_MESSAGE);
 			if(userSelection == JOptionPane.YES_OPTION)
 			{
+				this.tabs.saveTabsSources();
+				Preferences.getInstance().save();
 				System.exit(1);
 			}
 		}
@@ -79,7 +83,6 @@ public class MainFrame extends JFrame implements WindowAdapter
 	{
 		this.toolBar = this.buildToolBar();
 		this.tabs = new TabbedBoard();
-		this.tabs.addEmptyBoard();
 
 		this.setJMenuBar(this.buildMenuBar());
 
