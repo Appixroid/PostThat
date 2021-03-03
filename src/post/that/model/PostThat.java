@@ -10,6 +10,7 @@ import org.w3c.dom.Node;
 
 public class PostThat
 {
+
 	public static final String POST_THAT_ELEMENT_NAME = "post-that";
 
 	public static final String POST_THAT_ID_ATTR = "id";
@@ -18,6 +19,7 @@ public class PostThat
 	public static final String POST_THAT_WIDTH_ATTR = "width";
 	public static final String POST_THAT_HEIGHT_ATTR = "height";
 	private static final String POST_THAT_COLOR_ATTR = "color";
+	private static final String COLOR_COMPONENT_SEPARATOR = ", ";
 
 	private static final String CHARS_OF_IDS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_?!.,%$€.";
 	private static final int DEFAULT_SIZE = 250;
@@ -137,24 +139,38 @@ public class PostThat
 	{
 		NamedNodeMap attributes = node.getAttributes();
 
-		String id = attributes.getNamedItem(PostThat.POST_THAT_ID_ATTR).getNodeValue();
+		String id = PostThat.getAttributeValue(attributes, PostThat.POST_THAT_ID_ATTR);
 
-		int x = Integer.parseInt(attributes.getNamedItem(PostThat.POST_THAT_X_ATTR).getNodeValue());
-		int y = Integer.parseInt(attributes.getNamedItem(PostThat.POST_THAT_Y_ATTR).getNodeValue());
-		int width = Integer.parseInt(attributes.getNamedItem(PostThat.POST_THAT_WIDTH_ATTR).getNodeValue());
-		int height = Integer.parseInt(attributes.getNamedItem(PostThat.POST_THAT_HEIGHT_ATTR).getNodeValue());
+		int x = PostThat.getIntegerAttributeValue(attributes, PostThat.POST_THAT_X_ATTR);
+		int y = PostThat.getIntegerAttributeValue(attributes, PostThat.POST_THAT_Y_ATTR);
+		int width = PostThat.getIntegerAttributeValue(attributes, PostThat.POST_THAT_WIDTH_ATTR);
+		int height = PostThat.getIntegerAttributeValue(attributes, PostThat.POST_THAT_HEIGHT_ATTR);
 
-		String color = attributes.getNamedItem(PostThat.POST_THAT_COLOR_ATTR).getNodeValue();
-		String[] colorComponents = color.split(", ");
-		int r = Integer.parseInt(colorComponents[0]);
-		int g = Integer.parseInt(colorComponents[1]);
-		int b = Integer.parseInt(colorComponents[2]);
+		Color c = PostThat.getColorAttributeValue(attributes, PostThat.POST_THAT_COLOR_ATTR);
 
 		String content = node.getTextContent();
 
-		PostThat postThat = new PostThat(id, x, y, width, height, content, new Color(r, g, b));
+		return new PostThat(id, x, y, width, height, content, c);
+	}
 
-		return postThat;
+	private static Color getColorAttributeValue(NamedNodeMap attributes, String name)
+	{
+		String color = PostThat.getAttributeValue(attributes, name);
+		String[] colorComponents = color.split(PostThat.COLOR_COMPONENT_SEPARATOR);
+		int r = Integer.parseInt(colorComponents[0]);
+		int g = Integer.parseInt(colorComponents[1]);
+		int b = Integer.parseInt(colorComponents[2]);
+		return new Color(r, g, b);
+	}
+
+	private static int getIntegerAttributeValue(NamedNodeMap attributes, String name)
+	{
+		return Integer.parseInt(PostThat.getAttributeValue(attributes, name));
+	}
+
+	private static String getAttributeValue(NamedNodeMap attributes, String name)
+	{
+		return attributes.getNamedItem(name).getNodeValue();
 	}
 
 	public static Node toXML(Document document, PostThat postThat)
@@ -162,33 +178,32 @@ public class PostThat
 		Node postThatElement = document.createElement(PostThat.POST_THAT_ELEMENT_NAME);
 		NamedNodeMap attributes = postThatElement.getAttributes();
 
-		Attr idAttribute = document.createAttribute(PostThat.POST_THAT_ID_ATTR);
-		idAttribute.setNodeValue(postThat.getId());
-		attributes.setNamedItem(idAttribute);
+		attributes.setNamedItem(PostThat.createNamedAttribute(document, PostThat.POST_THAT_ID_ATTR, postThat.getId()));
+		attributes.setNamedItem(PostThat.createNamedIntegerAttribute(document, PostThat.POST_THAT_X_ATTR, postThat.getX()));
+		attributes.setNamedItem(PostThat.createNamedIntegerAttribute(document, PostThat.POST_THAT_Y_ATTR, postThat.getY()));
+		attributes.setNamedItem(PostThat.createNamedIntegerAttribute(document, PostThat.POST_THAT_WIDTH_ATTR, postThat.getWidth()));
+		attributes.setNamedItem(PostThat.createNamedIntegerAttribute(document, PostThat.POST_THAT_HEIGHT_ATTR, postThat.getHeight()));
 
-		Attr xAttribute = document.createAttribute(PostThat.POST_THAT_X_ATTR);
-		xAttribute.setNodeValue(Integer.toString(postThat.getX()));
-		attributes.setNamedItem(xAttribute);
-
-		Attr yAttribute = document.createAttribute(PostThat.POST_THAT_Y_ATTR);
-		yAttribute.setNodeValue(Integer.toString(postThat.getY()));
-		attributes.setNamedItem(yAttribute);
-
-		Attr widthAttribute = document.createAttribute(PostThat.POST_THAT_WIDTH_ATTR);
-		widthAttribute.setNodeValue(Integer.toString(postThat.getWidth()));
-		attributes.setNamedItem(widthAttribute);
-
-		Attr heightAttribute = document.createAttribute(PostThat.POST_THAT_HEIGHT_ATTR);
-		heightAttribute.setNodeValue(Integer.toString(postThat.getHeight()));
-		attributes.setNamedItem(heightAttribute);
-
-		Attr colorAttribute = document.createAttribute(PostThat.POST_THAT_COLOR_ATTR);
-		Color color = postThat.getColor();
-		colorAttribute.setNodeValue(Integer.toString(color.getRed()) + ", " + Integer.toString(color.getGreen()) + ", " + Integer.toString(color.getBlue()));
-		attributes.setNamedItem(colorAttribute);
+		attributes.setNamedItem(PostThat.createNamedAttribute(document, PostThat.POST_THAT_COLOR_ATTR, PostThat.colorToAttrValue(postThat.getColor())));
 
 		postThatElement.setTextContent(postThat.content);
-
 		return postThatElement;
+	}
+
+	private static Attr createNamedIntegerAttribute(Document document, String name, int value)
+	{
+		return PostThat.createNamedAttribute(document, name, Integer.toString(value));
+	}
+
+	private static Attr createNamedAttribute(Document document, String name, String value)
+	{
+		Attr colorAttribute = document.createAttribute(name);
+		colorAttribute.setNodeValue(value);
+		return colorAttribute;
+	}
+
+	private static String colorToAttrValue(Color color)
+	{
+		return Integer.toString(color.getRed()) + PostThat.COLOR_COMPONENT_SEPARATOR + Integer.toString(color.getGreen()) + PostThat.COLOR_COMPONENT_SEPARATOR + Integer.toString(color.getBlue());
 	}
 }
