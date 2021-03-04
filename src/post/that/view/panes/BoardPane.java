@@ -140,7 +140,7 @@ public class BoardPane extends JDesktopPane implements InternalFrameAdapter, Com
 	public String getDisplaySource()
 	{
 		String source = this.board.getSourceName();
-		if(source == null)
+		if(source.length() == 0)
 		{
 			return Internationalization.get("NEW_BOARD");
 		}
@@ -196,15 +196,8 @@ public class BoardPane extends JDesktopPane implements InternalFrameAdapter, Com
 	private boolean saveToNewLocation()
 	{
 		File saveFile = BoardFileDialog.getSaveFile(this);
-		if(saveFile == null)
-		{
-			return false;
-		}
-		else
-		{
-			this.board.setSource(saveFile);
-			return this.save();
-		}
+		this.board.setSource(saveFile);
+		return this.save();
 	}
 
 	private void applyChangeOnSource(AWTEvent event, Consumer<PostThatFrame> apply)

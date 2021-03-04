@@ -9,6 +9,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -33,7 +34,7 @@ public class PostThatBoard
 
 	private final Map<String, PostThat> postThats;
 	private boolean saved;
-	private File source;
+	private File source = new File("");
 
 	public PostThatBoard(Collection<PostThat> postThats)
 	{
@@ -60,26 +61,12 @@ public class PostThatBoard
 
 	public String getFullSource()
 	{
-		if(this.source != null)
-		{
-			return this.source.getAbsolutePath();
-		}
-		else
-		{
-			return null;
-		}
+		return this.source.getAbsolutePath();
 	}
 
 	public String getSourceName()
 	{
-		if(this.source == null)
-		{
-			return null;
-		}
-		else
-		{
-			return this.source.getName();
-		}
+		return this.source.getName();
 	}
 
 	public boolean addAll(Collection<PostThat> postThats)
@@ -104,7 +91,7 @@ public class PostThatBoard
 		}
 		else
 		{
-			return null;
+			return "";
 		}
 	}
 
@@ -122,86 +109,65 @@ public class PostThatBoard
 			return false;
 		}
 	}
+	
+	public boolean safeGet(String id, Consumer<PostThat> toDo)
+	{
+		PostThat postThat = this.get(id);
+		
+		if(postThat == null)
+		{
+			return false;
+		}
+		else
+		{
+			toDo.accept(postThat);
+			return true;
+		}
+	}
 
 	public PostThat get(String id)
 	{
 		return this.postThats.get(id);
 	}
 
-	public PostThat remove(String id)
+	public boolean remove(String id)
 	{
-		PostThat postThat = this.postThats.remove(id);
-
-		if(postThat != null)
-		{
+		return this.safeGet(id, postThat -> {
+			this.postThats.remove(id, postThat);
 			this.saved = false;
-		}
-
-		return postThat;
+		});
 	}
 
 	public boolean resize(String id, int newWidth, int newHeight)
 	{
-		PostThat postThat = this.get(id);
-		if(postThat != null)
-		{
+		return this.safeGet(id, postThat -> {
 			postThat.resize(newWidth, newHeight);
-			this.saved = false;
-
-			return true;
-		}
-		else
-		{
-			return false;
-		}
+			this.saved = false;			
+		});
 	}
 
 	public boolean move(String id, int newX, int newY)
 	{
-		PostThat postThat = this.get(id);
-		if(postThat != null)
-		{
+		return this.safeGet(id, postThat -> {
 			postThat.move(newX, newY);
-			this.saved = false;
-
-			return true;
-		}
-		else
-		{
-			return false;
-		}
+			this.saved = false;			
+		});
 	}
 
 	public boolean changeContent(String id, String content)
 	{
-		PostThat postThat = this.get(id);
-		if(postThat != null)
-		{
+		return this.safeGet(id, postThat -> {
 			postThat.setContent(content);
-			this.saved = false;
-
-			return true;
-		}
-		else
-		{
-			return false;
-		}
+			this.saved = false;			
+		});
 	}
 
 	public boolean changeColor(String id, Color color)
 	{
-		PostThat postThat = this.get(id);
-		if(postThat != null)
-		{
+		return this.safeGet(id, postThat -> {
 			postThat.setColor(color);
-			this.saved = false;
-
-			return true;
-		}
-		else
-		{
-			return false;
-		}
+			this.saved = false;			
+		});
 	}
 
 	public Collection<PostThat> getPostThats()
@@ -260,44 +226,39 @@ public class PostThatBoard
 
 	private boolean createSaveFile()
 	{
-		if(this.source == null)
-		{
-			return false;
-		}
-		else
-		{
-			return this.createSourceFile();
-		}
-	}
-
-	private boolean createSourceFile()
-	{
-		if(!this.source.exists())
-		{
-			return this.createSourceFileWithParents();
-		}
-		else
+		if(this.source.exists())
 		{
 			return true;
+		}
+		else
+		{
+			return this.createSourceFileWithParents();
 		}
 	}
 
 	private boolean createSourceFileWithParents()
 	{
-		if(this.source.getParentFile().exists() || this.source.getParentFile().mkdirs())
+		if(this.source.getParentFile() != null)
 		{
-			try
+			if(this.source.getParentFile().exists() || this.source.getParentFile().mkdirs())
 			{
-				return this.source.createNewFile();
+				try
+				{
+					return this.source.createNewFile();
+				}
+				catch(IOException e)
+				{
+					return false;
+				}
 			}
-			catch(IOException e)
+			else
 			{
 				return false;
 			}
 		}
 		else
 		{
-			return false;
+			return true;
 		}
 	}
 
@@ -356,8 +317,8 @@ public class PostThatBoard
 		try
 		{
 			DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-
 			Document boardDocument = builder.newDocument();
+			
 			Element root = boardDocument.createElement(PostThatBoard.ROOT_ELEMENT_NAME);
 
 			for(PostThat postThat : board.getPostThats())

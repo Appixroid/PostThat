@@ -40,7 +40,7 @@ public class TabbedBoard extends JPanel implements BoardListener
 	public void openBoard()
 	{
 		File boardFile = BoardFileDialog.getLoadFile(this);
-		if(boardFile != null)
+		if(boardFile.exists())
 		{
 			this.addBoard(new BoardPane(boardFile));
 		}
@@ -139,7 +139,7 @@ public class TabbedBoard extends JPanel implements BoardListener
 		for(BoardPane board : this.getBoards())
 		{
 			String source = board.getSource();
-			if(source != null)
+			if(source.length() > 0)
 			{
 				sources.add(source);
 			}

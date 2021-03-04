@@ -34,7 +34,7 @@ public enum Images
 		}
 		catch(IOException e)
 		{
-			this.image = null;
+			this.image = new BufferedImage(0, 0, BufferedImage.TYPE_INT_ARGB);
 			this.loaded = false;
 		}
 	}

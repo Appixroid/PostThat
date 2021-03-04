@@ -39,7 +39,7 @@ public class BoardFileDialog extends JFileChooser
 		}
 		else
 		{
-			return null;
+			return new File("");
 		}
 	}
 

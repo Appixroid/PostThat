@@ -38,15 +38,7 @@ public class Preferences
 
 	public String getString(String key, String defaultValue)
 	{
-		String value = this.preferences.get(key);
-		if(value == null)
-		{
-			return defaultValue;
-		}
-		else
-		{
-			return value;
-		}
+		return this.safeGet(key);
 	}
 
 	public void setString(String key, String value)
@@ -61,15 +53,7 @@ public class Preferences
 
 	public int getInt(String key, int defaultValue)
 	{
-		String value = this.preferences.get(key);
-		if(value == null)
-		{
-			return defaultValue;
-		}
-		else
-		{
-			return Integer.parseInt(value);
-		}
+		return Integer.parseInt(this.safeGet(key));
 	}
 
 	public void setInt(String key, int value)
@@ -84,15 +68,7 @@ public class Preferences
 
 	public long getLong(String key, long defaultValue)
 	{
-		String value = this.preferences.get(key);
-		if(value == null)
-		{
-			return defaultValue;
-		}
-		else
-		{
-			return Long.parseLong(value);
-		}
+		return Long.parseLong(this.safeGet(key));
 	}
 
 	public void setLong(String key, long value)
@@ -107,15 +83,7 @@ public class Preferences
 
 	public float getFloat(String key, float defaultValue)
 	{
-		String value = this.preferences.get(key);
-		if(value == null)
-		{
-			return defaultValue;
-		}
-		else
-		{
-			return Float.parseFloat(value);
-		}
+		return Float.parseFloat(this.safeGet(key));
 	}
 
 	public void setFloat(String key, float value)
@@ -130,15 +98,7 @@ public class Preferences
 
 	public double getDouble(String key, double defaultValue)
 	{
-		String value = this.preferences.get(key);
-		if(value == null)
-		{
-			return defaultValue;
-		}
-		else
-		{
-			return Double.parseDouble(value);
-		}
+		return Double.parseDouble(this.safeGet(key));
 	}
 
 	public void setDouble(String key, double value)
@@ -153,15 +113,7 @@ public class Preferences
 
 	public byte getByte(String key, byte defaultValue)
 	{
-		String value = this.preferences.get(key);
-		if(value == null)
-		{
-			return defaultValue;
-		}
-		else
-		{
-			return Byte.parseByte(value);
-		}
+		return Byte.parseByte(this.safeGet(key));
 	}
 
 	public void setByte(String key, byte value)
@@ -176,15 +128,7 @@ public class Preferences
 
 	public boolean getBoolean(String key, boolean defaultValue)
 	{
-		String value = this.preferences.get(key);
-		if(value == null)
-		{
-			return defaultValue;
-		}
-		else
-		{
-			return Boolean.parseBoolean(value);
-		}
+		return Boolean.parseBoolean(this.safeGet(key));
 	}
 
 	public void setBoolean(String key, boolean value)
@@ -199,16 +143,7 @@ public class Preferences
 
 	public Collection<String> getCollection(String key, Collection<String> defaultValue)
 	{
-		String values = this.preferences.get(key);
-
-		if(values != null)
-		{
-			return Arrays.asList(values.split(Preferences.COLLECTION_STRINGIFY_SEPARATOR));
-		}
-		else
-		{
-			return defaultValue;
-		}
+		return Arrays.asList(this.safeGet(key).split(Preferences.COLLECTION_STRINGIFY_SEPARATOR));
 	}
 
 	public <T> Collection<T> getCollection(String key, Function<String, T> mapper)
@@ -218,15 +153,7 @@ public class Preferences
 
 	public <T> Collection<T> getCollection(String key, Function<String, T> mapper, Collection<T> defaultValue)
 	{
-		String values = this.preferences.get(key);
-		if(values != null)
-		{
-			return this.parseValues(values, mapper);
-		}
-		else
-		{
-			return defaultValue;
-		}
+		return this.parseValues(this.safeGet(key), mapper);
 	}
 
 	public void setCollection(String key, Object... collections)
@@ -254,6 +181,19 @@ public class Preferences
 		}
 	}
 
+	private String safeGet(String key)
+	{
+		String value = this.preferences.get(key);
+		if(value == null)
+		{
+			return "";
+		}
+		else
+		{
+			return value;
+		}
+	}
+	
 	private <T> Collection<T> parseValues(String values, Function<String, T> mapper)
 	{
 		Collection<T> list = new ArrayList<T>();
