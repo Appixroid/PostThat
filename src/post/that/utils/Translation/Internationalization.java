@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Map.Entry;
 
 public class Internationalization
 {
@@ -54,21 +55,31 @@ public class Internationalization
 
 	public String translate(String key)
 	{
+		Map<String, String> translations = getTranslations();
+
+		if(translations.containsKey(key))
+		{
+			return translations.get(key);
+		}
+		else
+		{
+			return key;
+		}
+	}
+
+	private Map<String, String> getTranslations()
+	{
 		Map<String, String> translationForCurrentLanguage = this.translation.get(this.currentLanguage);
 
 		if(translationForCurrentLanguage == null)
 		{
 			translationForCurrentLanguage = this.translation.get(this.fallbackLanguage);
 		}
-
-		if((translationForCurrentLanguage != null) && translationForCurrentLanguage.containsKey(key))
-		{
-			return translationForCurrentLanguage.get(key);
-		}
+		
+		if(translationForCurrentLanguage == null)
+			return Map.of();
 		else
-		{
-			return key;
-		}
+			return translationForCurrentLanguage;
 	}
 
 	private void parseTranslationFolderContent(File translationFolder) throws IOException
@@ -153,18 +164,24 @@ public class Internationalization
 		private void parse() throws IOException
 		{
 			List<String> lines = Files.readAllLines(Paths.get(this.file.getPath()));
-			for(int i = 0; i < lines.size(); i++)
+			for(String line : lines)
 			{
-				String line = lines.get(i);
-				String[] keyValue = line.split(TranslationFile.KEY_VALUE_SEPARATOR);
-				if(keyValue.length == 2)
-				{
-					this.translation.put(keyValue[0], keyValue[1]);
-				}
-				else
-				{
-					throw new IOException("Incorrect line n°" + i + ", cannot parse : " + line);
-				}
+				Entry<String, String> entry = parseLine(line);
+				this.translation.put(entry.getKey(), entry.getValue());
+			}
+		}
+
+		private Entry<String, String> parseLine(String line) throws IOException
+		{
+			String[] keyValue = line.split(TranslationFile.KEY_VALUE_SEPARATOR);
+			
+			if(keyValue.length == 2)
+			{
+				return Map.entry(keyValue[0], keyValue[1]);
+			}
+			else
+			{
+				throw new IOException("Incorrect line, cannot parse : " + line);
 			}
 		}
 	}
