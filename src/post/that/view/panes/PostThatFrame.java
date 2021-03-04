@@ -122,8 +122,7 @@ public class PostThatFrame extends JInternalFrame implements ColorListenable
 		this.hideFrameTitleBar();
 
 		Container contentPane = this.getContentPane();
-		BorderLayout layout = new BorderLayout();
-		contentPane.setLayout(layout);
+		contentPane.setLayout(new BorderLayout());
 
 		this.titleBar = new PostThatTitleBar();
 		contentPane.add(this.titleBar, BorderLayout.NORTH);
