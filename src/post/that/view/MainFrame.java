@@ -118,6 +118,7 @@ public class MainFrame extends JFrame implements WindowAdapter
 		fileMenu.add(this.createOpenItem());
 		fileMenu.add(this.createSaveItem());
 		fileMenu.add(this.createSaveAllItem());
+		fileMenu.add(this.createQuitItem());
 
 		return fileMenu;
 	}
@@ -167,6 +168,17 @@ public class MainFrame extends JFrame implements WindowAdapter
 			}
 		});
 		return saveAllItem;
+	}
+	
+	private JMenuItem createQuitItem()
+	{
+		JMenuItem quitItem = new JMenuItem(Internationalization.get("QUIT"));
+		quitItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q, InputEvent.CTRL_DOWN_MASK));
+		quitItem.setIcon(Images.EXIT_ICON.getScaledIcon(16, 16));
+		quitItem.addActionListener(event -> {
+			this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+		});
+		return quitItem;
 	}
 
 	private JMenuItem buildBoardMenu()
