@@ -1,5 +1,6 @@
-package post.that.view.panes;
+	package post.that.view.panes;
 
+import java.awt.AWTEvent;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ComponentEvent;
@@ -9,6 +10,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.function.Consumer;
 
 import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
@@ -59,41 +61,7 @@ public class BoardPane extends JDesktopPane implements InternalFrameAdapter, Com
 
 	public boolean save()
 	{
-		boolean saved = false;
-
-		if(this.board.isSaved())
-		{
-			saved = true;
-		}
-		else
-		{
-			boolean saveAchieved = this.board.save();
-			if(!saveAchieved)
-			{
-				int userSelection = JOptionPane.showConfirmDialog(this, Internationalization.get("AUTOMATIC_SAVE_FAIL_KEEP_SAVING"), Internationalization.get("SAVE_ERROR"), JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE);
-				if(userSelection == JOptionPane.YES_OPTION)
-				{
-					File saveFile = BoardFileDialog.getSaveFile(this);
-					if(saveFile != null)
-					{
-						this.board.setSource(saveFile);
-						saved = this.save();
-					}
-					else
-					{
-						saved = false;
-					}
-				}
-				else
-				{
-					saved = false;
-				}
-			}
-			else
-			{
-				saved = true;
-			}
-		}
+		boolean saved = saveBoard();
 
 		if(saved)
 		{
@@ -125,41 +93,41 @@ public class BoardPane extends JDesktopPane implements InternalFrameAdapter, Com
 	@Override
 	public void internalFrameClosed(InternalFrameEvent event)
 	{
-		PostThatFrame frame = (PostThatFrame) event.getSource();
-		this.board.remove(frame.getId());
-		this.notifyBoardChangedToAll(this);
+		this.applyChangeOnSource(event, frame -> {			
+			this.board.remove(frame.getId());
+		});
 	}
 
 	@Override
 	public void componentMoved(ComponentEvent event)
 	{
-		PostThatFrame frame = (PostThatFrame) event.getSource();
-		this.board.move(frame.getId(), frame.getX(), frame.getY());
-		this.notifyBoardChangedToAll(this);
+		this.applyChangeOnSource(event, frame -> {			
+			this.board.move(frame.getId(), frame.getX(), frame.getY());
+		});
 	}
 
 	@Override
 	public void componentResized(ComponentEvent event)
 	{
-		PostThatFrame frame = (PostThatFrame) event.getSource();
-		this.board.resize(frame.getId(), frame.getWidth(), frame.getHeight());
-		this.notifyBoardChangedToAll(this);
+		this.applyChangeOnSource(event, frame -> {			
+			this.board.resize(frame.getId(), frame.getWidth(), frame.getHeight());
+		});
 	}
 
 	@Override
 	public void textValueChanged(TextEvent event)
 	{
-		PostThatFrame frame = (PostThatFrame) event.getSource();
-		this.board.changeContent(frame.getId(), frame.getText());
-		this.notifyBoardChangedToAll(this);
+		this.applyChangeOnSource(event, frame -> {			
+			this.board.changeContent(frame.getId(), frame.getText());
+		});
 	}
 
 	@Override
 	public void colorValueChanged(ColorEvent event)
 	{
-		PostThatFrame frame = (PostThatFrame) event.getSource();
-		this.board.changeColor(frame.getId(), frame.getBackground());
-		this.notifyBoardChangedToAll(this);
+		this.applyChangeOnSource(event, frame -> {			
+			this.board.changeColor(frame.getId(), frame.getBackground());
+		});
 	}
 
 	public void createEmptyPostThat()
@@ -193,6 +161,60 @@ public class BoardPane extends JDesktopPane implements InternalFrameAdapter, Com
 		return this.board.isSaved();
 	}
 
+	private boolean saveBoard()
+	{		
+		if(this.board.isSaved())
+		{
+			return false;
+		}
+		else
+		{
+			boolean saveAchieved = this.board.save();
+			if(!saveAchieved)
+			{
+				return askForSaveNewLocation();
+			}
+			else
+			{
+				return false;
+			}
+		}
+	}
+
+	private boolean askForSaveNewLocation()
+	{
+		int userSelection = JOptionPane.showConfirmDialog(this, Internationalization.get("AUTOMATIC_SAVE_FAIL_KEEP_SAVING"), Internationalization.get("SAVE_ERROR"), JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE);
+		if(userSelection == JOptionPane.YES_OPTION)
+		{
+			return saveToNewLocation();
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	private boolean saveToNewLocation()
+	{
+		File saveFile = BoardFileDialog.getSaveFile(this);
+		if(saveFile != null)
+		{
+			this.board.setSource(saveFile);
+			return this.save();
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
+	private void applyChangeOnSource(AWTEvent event, Consumer<PostThatFrame> apply)
+	{
+		PostThatFrame frame = (PostThatFrame) event.getSource();
+		apply.accept(frame);
+		this.notifyBoardChangedToAll(this);
+	}
+	
 	private void addAll(Collection<PostThat> postThats)
 	{
 		for(PostThat postThat : postThats)
