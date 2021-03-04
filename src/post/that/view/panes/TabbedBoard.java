@@ -5,6 +5,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.swing.Icon;
 import javax.swing.JPanel;
@@ -28,19 +29,7 @@ public class TabbedBoard extends JPanel implements BoardListener
 		this.setLayout(new BorderLayout());
 		this.add(this.tabs, BorderLayout.CENTER);
 
-		Collection<String> openBoards = Preferences.getInstance().getCollection(TabbedBoard.OPEN_BOARDS_SETTINGS);
-
-		if(openBoards.size() > 0)
-		{
-			for(String board : openBoards)
-			{
-				this.addBoard(new BoardPane(new File(board)));
-			}
-		}
-		else
-		{
-			this.addEmptyBoard();
-		}
+		openSavedBoards();
 	}
 
 	public void addEmptyBoard()
@@ -55,13 +44,20 @@ public class TabbedBoard extends JPanel implements BoardListener
 		{
 			this.addBoard(new BoardPane(boardFile));
 		}
-
 	}
 
 	public void addBoard(BoardPane board)
 	{
 		this.tabs.addTab(board.getDisplaySource(), null, board);
 		board.addBoardListener(this);
+	}
+	
+	public void addAll(List<BoardPane> boards)
+	{
+		for(BoardPane board : boards)
+		{
+			this.addBoard(board);
+		}
 	}
 
 	public BoardPane getCurrentBoard()
@@ -175,6 +171,27 @@ public class TabbedBoard extends JPanel implements BoardListener
 		this.setIcon(board, Images.NEW_ICON.getScaledIcon(16, 16));
 	}
 
+	private void openSavedBoards()
+	{
+		Collection<String> savedBoards = Preferences.getInstance().getCollection(TabbedBoard.OPEN_BOARDS_SETTINGS);
+
+		if(savedBoards.size() > 0)
+		{			
+			addAllBoardsFromPath(savedBoards);
+		}
+		else
+		{
+			this.addEmptyBoard();
+		}
+	}
+
+	private void addAllBoardsFromPath(Collection<String> savedBoards)
+	{
+		this.addAll(savedBoards.stream().map(boardPath -> {
+			return new BoardPane(new File(boardPath));
+		}).collect(Collectors.toList()));
+	}
+	
 	private void setIcon(BoardPane board, Icon icon)
 	{
 		this.tabs.setIconAt(this.getBoards().indexOf(board), icon);
