@@ -187,9 +187,15 @@ public class TabbedBoard extends JPanel implements BoardListener
 
 	private void addAllBoardsFromPath(Collection<String> savedBoards)
 	{
-		this.addAll(savedBoards.stream().map(boardPath -> {
-			return new BoardPane(new File(boardPath));
-		}).collect(Collectors.toList()));
+		List<BoardPane> boards = savedBoards.stream().map(boardPath -> {
+			return new File(boardPath);
+		}).filter(file -> {
+			return file.exists();
+		}).map(file -> {
+			return new BoardPane(file);
+		}).collect(Collectors.toList());
+
+		this.addAll(boards);
 	}
 
 	private void setIcon(BoardPane board, Icon icon)
