@@ -1,7 +1,10 @@
 package post.that.view.preferences;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -13,10 +16,9 @@ import java.util.Map.Entry;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import post.that.utils.LocalPaths;
-
 public class Preferences
 {
+	private static final Path CONFIG_FILE = Paths.get(System.getProperty("user.home") + File.separator + ".post-that" + File.separator + "settings.conf");
 	private static final String COLLECTION_STRINGIFY_SEPARATOR = ";";
 
 	private static final Preferences instance = new Preferences();
@@ -219,13 +221,7 @@ public class Preferences
 		String values = this.preferences.get(key);
 		if(values != null)
 		{
-			Collection<T> list = new ArrayList<T>();
-			for(String value : values.split(Preferences.COLLECTION_STRINGIFY_SEPARATOR))
-			{
-				list.add(mapper.apply(value));
-			}
-
-			return list;
+			return this.parseValues(values, mapper);
 		}
 		else
 		{
@@ -249,7 +245,7 @@ public class Preferences
 	{
 		try
 		{
-			Files.writeString(LocalPaths.CONFIG_FILE.toLocalFile().toPath(), this.getPreferencesFileContent());
+			Files.writeString(Preferences.CONFIG_FILE, this.getPreferencesFileContent());
 			return true;
 		}
 		catch(IOException e)
@@ -258,11 +254,23 @@ public class Preferences
 		}
 	}
 
+	private <T> Collection<T> parseValues(String values, Function<String, T> mapper)
+	{
+		Collection<T> list = new ArrayList<T>();
+
+		for(String value : values.split(Preferences.COLLECTION_STRINGIFY_SEPARATOR))
+		{
+			list.add(mapper.apply(value));
+		}
+
+		return list;
+	}
+
 	private void parsePreferences()
 	{
 		try
 		{
-			List<String> lines = Files.readAllLines(LocalPaths.CONFIG_FILE.toLocalFile().toPath());
+			List<String> lines = Files.readAllLines(Preferences.CONFIG_FILE);
 			for(String line : lines)
 			{
 				int separator = line.indexOf('=');
@@ -279,10 +287,12 @@ public class Preferences
 	private String getPreferencesFileContent()
 	{
 		String preferencesContent = "";
+
 		for(Entry<String, String> preference : this.preferences.entrySet())
 		{
 			preferencesContent += preference.getKey() + "=" + preference.getValue() + "\n";
 		}
+
 		return preferencesContent;
 	}
 
