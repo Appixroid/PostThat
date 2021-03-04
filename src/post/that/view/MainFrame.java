@@ -241,7 +241,7 @@ public class MainFrame extends JFrame implements WindowAdapter
 		toolBarVisibility.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_T, InputEvent.CTRL_DOWN_MASK));
 		toolBarVisibility.setSelected(this.preferences.getBoolean(MainFrame.SHOW_TOOL_BAR_PREFERENCE, true));
 		toolBarVisibility.addActionListener(new CheckBoxMenuItemPreferenceListener(this, MainFrame.SHOW_TOOL_BAR_PREFERENCE, selected -> {
-			MainFrame.this.toolBar.setVisible(selected);			
+			MainFrame.this.toolBar.setVisible(selected);
 		}));
 		return toolBarVisibility;
 	}
@@ -295,28 +295,28 @@ public class MainFrame extends JFrame implements WindowAdapter
 		});
 		return closeBoardButton;
 	}
-	
+
 	private void closeCurrentBoard()
 	{
 		this.applyOnCurrentBoard(currentBoard -> {
 			this.tabs.close(currentBoard);
 		});
 	}
-	
+
 	private void addEmptyToCurrentBoard()
 	{
 		this.applyOnCurrentBoard(currentBoard -> {
 			currentBoard.createEmptyPostThat();
 		});
 	}
-	
+
 	private void clearCurrentBoard()
 	{
 		this.applyOnCurrentBoard(currentBoard -> {
 			currentBoard.clear();
 		});
 	}
-	
+
 	private void saveCurrentBoard()
 	{
 		this.applyOnCurrentBoard(currentBoard -> {
@@ -326,7 +326,7 @@ public class MainFrame extends JFrame implements WindowAdapter
 			}
 		});
 	}
-	
+
 	private void applyOnCurrentBoard(Consumer<BoardPane> action)
 	{
 		BoardPane currentBoard = this.tabs.getCurrentBoard();
@@ -336,38 +336,38 @@ public class MainFrame extends JFrame implements WindowAdapter
 			action.accept(currentBoard);
 		}
 	}
-	
+
 	private static class CheckBoxMenuItemPreferenceListener implements ActionListener
 	{
 		private static final Preferences preferences = Preferences.getInstance();
-		
+
 		private Component parent;
 		private String preferenceName;
 		private Consumer<Boolean> action;
-		
+
 		public CheckBoxMenuItemPreferenceListener(Component parent, String preferenceName, Consumer<Boolean> action)
 		{
 			this.parent = parent;
 			this.preferenceName = preferenceName;
 			this.action = action;
 		}
-		
+
 		@Override
 		public void actionPerformed(ActionEvent event)
 		{
 			boolean selected = this.getCheckBoxItem(event).isSelected();
 			this.action.accept(selected);
-			preferences.setBoolean(this.preferenceName, selected);
-			if(!preferences.save())
+			CheckBoxMenuItemPreferenceListener.preferences.setBoolean(this.preferenceName, selected);
+			if(!CheckBoxMenuItemPreferenceListener.preferences.save())
 			{
 				JOptionPane.showMessageDialog(this.parent, Internationalization.get("UNABLE_TO_SAVE_PREFERENCES"), Internationalization.get("SAVE_ERROR"), JOptionPane.WARNING_MESSAGE);
 			}
 		}
-		
+
 		private JCheckBoxMenuItem getCheckBoxItem(ActionEvent event)
 		{
 			return (JCheckBoxMenuItem) event.getSource();
 		}
-		
+
 	}
 }

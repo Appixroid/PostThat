@@ -29,7 +29,7 @@ public class TabbedBoard extends JPanel implements BoardListener
 		this.setLayout(new BorderLayout());
 		this.add(this.tabs, BorderLayout.CENTER);
 
-		openSavedBoards();
+		this.openSavedBoards();
 	}
 
 	public void addEmptyBoard()
@@ -51,7 +51,7 @@ public class TabbedBoard extends JPanel implements BoardListener
 		this.tabs.addTab(board.getDisplaySource(), null, board);
 		board.addBoardListener(this);
 	}
-	
+
 	public void addAll(List<BoardPane> boards)
 	{
 		for(BoardPane board : boards)
@@ -176,8 +176,8 @@ public class TabbedBoard extends JPanel implements BoardListener
 		Collection<String> savedBoards = Preferences.getInstance().getCollection(TabbedBoard.OPEN_BOARDS_SETTINGS);
 
 		if(savedBoards.size() > 0)
-		{			
-			addAllBoardsFromPath(savedBoards);
+		{
+			this.addAllBoardsFromPath(savedBoards);
 		}
 		else
 		{
@@ -191,7 +191,7 @@ public class TabbedBoard extends JPanel implements BoardListener
 			return new BoardPane(new File(boardPath));
 		}).collect(Collectors.toList()));
 	}
-	
+
 	private void setIcon(BoardPane board, Icon icon)
 	{
 		this.tabs.setIconAt(this.getBoards().indexOf(board), icon);

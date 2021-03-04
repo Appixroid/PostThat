@@ -1,4 +1,4 @@
-	package post.that.view.panes;
+package post.that.view.panes;
 
 import java.awt.AWTEvent;
 import java.awt.Graphics;
@@ -61,7 +61,7 @@ public class BoardPane extends JDesktopPane implements InternalFrameAdapter, Com
 
 	public boolean save()
 	{
-		boolean saved = saveBoard();
+		boolean saved = this.saveBoard();
 
 		if(saved)
 		{
@@ -93,7 +93,7 @@ public class BoardPane extends JDesktopPane implements InternalFrameAdapter, Com
 	@Override
 	public void internalFrameClosed(InternalFrameEvent event)
 	{
-		this.applyChangeOnSource(event, frame -> {			
+		this.applyChangeOnSource(event, frame -> {
 			this.board.remove(frame.getId());
 		});
 	}
@@ -101,7 +101,7 @@ public class BoardPane extends JDesktopPane implements InternalFrameAdapter, Com
 	@Override
 	public void componentMoved(ComponentEvent event)
 	{
-		this.applyChangeOnSource(event, frame -> {			
+		this.applyChangeOnSource(event, frame -> {
 			this.board.move(frame.getId(), frame.getX(), frame.getY());
 		});
 	}
@@ -109,7 +109,7 @@ public class BoardPane extends JDesktopPane implements InternalFrameAdapter, Com
 	@Override
 	public void componentResized(ComponentEvent event)
 	{
-		this.applyChangeOnSource(event, frame -> {			
+		this.applyChangeOnSource(event, frame -> {
 			this.board.resize(frame.getId(), frame.getWidth(), frame.getHeight());
 		});
 	}
@@ -117,7 +117,7 @@ public class BoardPane extends JDesktopPane implements InternalFrameAdapter, Com
 	@Override
 	public void textValueChanged(TextEvent event)
 	{
-		this.applyChangeOnSource(event, frame -> {			
+		this.applyChangeOnSource(event, frame -> {
 			this.board.changeContent(frame.getId(), frame.getText());
 		});
 	}
@@ -125,7 +125,7 @@ public class BoardPane extends JDesktopPane implements InternalFrameAdapter, Com
 	@Override
 	public void colorValueChanged(ColorEvent event)
 	{
-		this.applyChangeOnSource(event, frame -> {			
+		this.applyChangeOnSource(event, frame -> {
 			this.board.changeColor(frame.getId(), frame.getBackground());
 		});
 	}
@@ -162,21 +162,21 @@ public class BoardPane extends JDesktopPane implements InternalFrameAdapter, Com
 	}
 
 	private boolean saveBoard()
-	{		
+	{
 		if(this.board.isSaved())
 		{
-			return false;
+			return true;
 		}
 		else
 		{
 			boolean saveAchieved = this.board.save();
-			if(!saveAchieved)
+			if(saveAchieved)
 			{
-				return askForSaveNewLocation();
+				return true;
 			}
 			else
 			{
-				return false;
+				return this.askForSaveNewLocation();
 			}
 		}
 	}
@@ -186,7 +186,7 @@ public class BoardPane extends JDesktopPane implements InternalFrameAdapter, Com
 		int userSelection = JOptionPane.showConfirmDialog(this, Internationalization.get("AUTOMATIC_SAVE_FAIL_KEEP_SAVING"), Internationalization.get("SAVE_ERROR"), JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE);
 		if(userSelection == JOptionPane.YES_OPTION)
 		{
-			return saveToNewLocation();
+			return this.saveToNewLocation();
 		}
 		else
 		{
@@ -197,24 +197,24 @@ public class BoardPane extends JDesktopPane implements InternalFrameAdapter, Com
 	private boolean saveToNewLocation()
 	{
 		File saveFile = BoardFileDialog.getSaveFile(this);
-		if(saveFile != null)
+		if(saveFile == null)
+		{
+			return false;
+		}
+		else
 		{
 			this.board.setSource(saveFile);
 			return this.save();
 		}
-		else
-		{
-			return false;
-		}
 	}
-	
+
 	private void applyChangeOnSource(AWTEvent event, Consumer<PostThatFrame> apply)
 	{
 		PostThatFrame frame = (PostThatFrame) event.getSource();
 		apply.accept(frame);
 		this.notifyBoardChangedToAll(this);
 	}
-	
+
 	private void addAll(Collection<PostThat> postThats)
 	{
 		for(PostThat postThat : postThats)

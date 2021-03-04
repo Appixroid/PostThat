@@ -55,7 +55,7 @@ public class Internationalization
 
 	public String translate(String key)
 	{
-		Map<String, String> translations = getTranslations();
+		Map<String, String> translations = this.getTranslations();
 
 		if(translations.containsKey(key))
 		{
@@ -75,11 +75,15 @@ public class Internationalization
 		{
 			translationForCurrentLanguage = this.translation.get(this.fallbackLanguage);
 		}
-		
+
 		if(translationForCurrentLanguage == null)
+		{
 			return Map.of();
+		}
 		else
+		{
 			return translationForCurrentLanguage;
+		}
 	}
 
 	private void parseTranslationFolderContent(File translationFolder) throws IOException
@@ -166,7 +170,7 @@ public class Internationalization
 			List<String> lines = Files.readAllLines(Paths.get(this.file.getPath()));
 			for(String line : lines)
 			{
-				Entry<String, String> entry = parseLine(line);
+				Entry<String, String> entry = this.parseLine(line);
 				this.translation.put(entry.getKey(), entry.getValue());
 			}
 		}
@@ -174,7 +178,7 @@ public class Internationalization
 		private Entry<String, String> parseLine(String line) throws IOException
 		{
 			String[] keyValue = line.split(TranslationFile.KEY_VALUE_SEPARATOR);
-			
+
 			if(keyValue.length == 2)
 			{
 				return Map.entry(keyValue[0], keyValue[1]);

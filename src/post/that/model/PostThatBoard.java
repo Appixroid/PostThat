@@ -266,7 +266,7 @@ public class PostThatBoard
 		}
 		else
 		{
-			return createSourceFile();
+			return this.createSourceFile();
 		}
 	}
 
@@ -274,7 +274,7 @@ public class PostThatBoard
 	{
 		if(!this.source.exists())
 		{
-			return createSourceFileWithParents();
+			return this.createSourceFileWithParents();
 		}
 		else
 		{
