@@ -52,7 +52,7 @@ public class TabbedBoard extends JPanel implements BoardListener
 		board.addBoardListener(this);
 	}
 
-	public void addAll(List<BoardPane> boards)
+	public void addAll(Collection<BoardPane> boards)
 	{
 		for(BoardPane board : boards)
 		{
@@ -132,9 +132,9 @@ public class TabbedBoard extends JPanel implements BoardListener
 		Preferences.getInstance().setCollection(TabbedBoard.OPEN_BOARDS_SETTINGS, this.getTabsSources());
 	}
 
-	public List<String> getTabsSources()
+	public Collection<String> getTabsSources()
 	{
-		List<String> sources = new ArrayList<String>();
+		Collection<String> sources = new ArrayList<String>();
 
 		for(BoardPane board : this.getBoards())
 		{

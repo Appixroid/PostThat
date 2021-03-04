@@ -1,10 +1,10 @@
 package post.that.view.listeners.board;
 
-import java.util.List;
+import java.util.Collection;
 
 public interface BoardListenable
 {
-	public abstract List<BoardListener> getBoardListeners();
+	public abstract Collection<BoardListener> getBoardListeners();
 
 	public default void addBoardListener(BoardListener listener)
 	{

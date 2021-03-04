@@ -1,10 +1,10 @@
 package post.that.view.listeners.color;
 
-import java.util.List;
+import java.util.Collection;
 
 public interface ColorListenable
 {
-	public abstract List<ColorListener> getColorListeners();
+	public abstract Collection<ColorListener> getColorListeners();
 
 	public default void addColorListener(ColorListener listener)
 	{

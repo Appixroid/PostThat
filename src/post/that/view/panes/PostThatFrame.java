@@ -11,7 +11,7 @@ import java.awt.event.MouseMotionListener;
 import java.awt.event.TextEvent;
 import java.awt.event.TextListener;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -37,7 +37,7 @@ public class PostThatFrame extends JInternalFrame implements ColorListenable
 	private static final long serialVersionUID = 1834391632998832385L;
 	private static final Dimension DEFAULT_SIZE = new Dimension(128, 128);
 
-	private List<ColorListener> listeners = new ArrayList<ColorListener>();
+	private Collection<ColorListener> listeners = new ArrayList<ColorListener>();
 
 	private PostThatTitleBar titleBar;
 	private String id;
@@ -93,7 +93,7 @@ public class PostThatFrame extends JInternalFrame implements ColorListenable
 	}
 
 	@Override
-	public List<ColorListener> getColorListeners()
+	public Collection<ColorListener> getColorListeners()
 	{
 		return this.listeners;
 	}

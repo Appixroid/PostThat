@@ -9,7 +9,6 @@ import java.awt.event.TextListener;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 import java.util.function.Consumer;
 
 import javax.swing.JDesktopPane;
@@ -33,7 +32,7 @@ public class BoardPane extends JDesktopPane implements InternalFrameAdapter, Com
 	private static final long serialVersionUID = 838829298589001150L;
 	private static final Image BACKGROUND = Images.BOARD_BACKGROUND.getDefaultImage();
 
-	private List<BoardListener> listeners;
+	private Collection<BoardListener> listeners;
 	private PostThatBoard board;
 
 	public BoardPane()
@@ -54,7 +53,7 @@ public class BoardPane extends JDesktopPane implements InternalFrameAdapter, Com
 	}
 
 	@Override
-	public List<BoardListener> getBoardListeners()
+	public Collection<BoardListener> getBoardListeners()
 	{
 		return this.listeners;
 	}
