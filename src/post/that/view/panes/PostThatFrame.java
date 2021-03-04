@@ -175,20 +175,20 @@ public class PostThatFrame extends JInternalFrame implements ColorListenable
 		{
 			this.setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
 
-			this.add(this.createMoveOption());
+			this.add(this.createMoveLabel());
 			this.add(Box.createHorizontalGlue());
-			this.add(this.createChangeColorOption());
-			this.add(this.createDeleteOption());
+			this.add(this.createChangeColorLabel());
+			this.add(this.createDeleteLabel());
 
 			this.setBorder(BorderFactory.createEmptyBorder(4, 4, 4, 4));
 		}
 
-		private JLabel createMoveOption()
+		private JLabel createMoveLabel()
 		{
 			return new JLabel(Images.PIN_ICON.getScaledIcon(16, 16));
 		}
 
-		private JLabel createChangeColorOption()
+		private JLabel createChangeColorLabel()
 		{
 			JLabel changeColor = new JLabel(Images.PICKER_ICON.getScaledIcon(16, 16));
 			changeColor.addMouseListener(new MouseAdapter() {
@@ -208,7 +208,7 @@ public class PostThatFrame extends JInternalFrame implements ColorListenable
 			return changeColor;
 		}
 
-		private JLabel createDeleteOption()
+		private JLabel createDeleteLabel()
 		{
 			JLabel delete = new JLabel(Images.TRASH_ICON.getScaledIcon(16, 16));
 			delete.addMouseListener(new MouseAdapter() {
