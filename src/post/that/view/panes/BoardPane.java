@@ -129,7 +129,7 @@ public class BoardPane extends JDesktopPane implements InternalFrameAdapter, Com
 		});
 	}
 
-	public void createEmptyPostThat()
+	public void addEmpty()
 	{
 		PostThat postThat = new PostThat();
 		this.board.add(postThat);

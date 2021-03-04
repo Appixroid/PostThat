@@ -57,7 +57,7 @@ public class MainFrame extends JFrame implements WindowAdapter
 	{
 		if(this.tabs.saveAll())
 		{
-			this.tabs.saveTabsSources();
+			this.tabs.saveOpenTabsSources();
 			Preferences.getInstance().save();
 			System.exit(0);
 		}
@@ -66,7 +66,7 @@ public class MainFrame extends JFrame implements WindowAdapter
 			int userSelection = JOptionPane.showConfirmDialog(this, Internationalization.get("CONFIRM_EXIT_WITH_SAVE_ERROR"), Internationalization.get("SAVE_ERROR"), JOptionPane.ERROR_MESSAGE);
 			if(userSelection == JOptionPane.YES_OPTION)
 			{
-				this.tabs.saveTabsSources();
+				this.tabs.saveOpenTabsSources();
 				Preferences.getInstance().save();
 				System.exit(1);
 			}
@@ -128,7 +128,7 @@ public class MainFrame extends JFrame implements WindowAdapter
 		createItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, InputEvent.CTRL_DOWN_MASK));
 		createItem.setIcon(Images.NEW_ICON.getScaledIcon(16, 16));
 		createItem.addActionListener(event -> {
-			this.tabs.addEmptyBoard();
+			this.tabs.addEmpty();
 		});
 		return createItem;
 	}
@@ -139,7 +139,7 @@ public class MainFrame extends JFrame implements WindowAdapter
 		openItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, InputEvent.CTRL_DOWN_MASK));
 		openItem.setIcon(Images.IMPORT_ICON.getScaledIcon(16, 16));
 		openItem.addActionListener(event -> {
-			this.tabs.openBoard();
+			this.tabs.open();
 		});
 		return openItem;
 	}
@@ -306,7 +306,7 @@ public class MainFrame extends JFrame implements WindowAdapter
 	private void addEmptyToCurrentBoard()
 	{
 		this.applyOnCurrentBoard(currentBoard -> {
-			currentBoard.createEmptyPostThat();
+			currentBoard.addEmpty();
 		});
 	}
 
