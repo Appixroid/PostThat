@@ -147,49 +147,8 @@ public class PostThatFrame extends JInternalFrame implements ColorListenable
 
 		public PostThatTitleBar()
 		{
-			this.setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
-
-			JLabel move = new JLabel(Images.PIN_ICON.getScaledIcon(16, 16));
-
-			JLabel changeColor = new JLabel(Images.PICKER_ICON.getScaledIcon(16, 16));
-			changeColor.addMouseListener(new MouseAdapter() {
-				@Override
-				public void mouseEntered(MouseEvent event)
-				{
-					PostThatTitleBar.this.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-				}
-
-				@Override
-				public void mouseClicked(MouseEvent event)
-				{
-					Color selectedColor = JColorChooser.showDialog(PostThatFrame.this, Internationalization.get("CHANGE_COLOR"), PostThatFrame.this.getBackground());
-					PostThatFrame.this.changeBackground(selectedColor);
-				}
-			});
-
-			JLabel delete = new JLabel(Images.TRASH_ICON.getScaledIcon(16, 16));
-			delete.addMouseListener(new MouseAdapter() {
-				@Override
-				public void mouseEntered(MouseEvent event)
-				{
-					PostThatTitleBar.this.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-				}
-
-				@Override
-				public void mouseClicked(MouseEvent event)
-				{
-					PostThatFrame.this.doDefaultCloseAction();
-				}
-			});
-
-			this.add(move);
-			this.add(Box.createHorizontalGlue());
-			this.add(changeColor);
-			this.add(delete);
-
-			this.setBorder(BorderFactory.createEmptyBorder(4, 4, 4, 4));
-
 			this.addMouseMotionListener(this);
+			this.build();
 		}
 
 		@Override
@@ -211,5 +170,62 @@ public class PostThatFrame extends JInternalFrame implements ColorListenable
 
 			PostThatFrame.this.setLocation(position);
 		}
+
+		private void build()
+		{
+			this.setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
+
+			this.add(this.createMoveOption());
+			this.add(Box.createHorizontalGlue());
+			this.add(this.createChangeColorOption());
+			this.add(this.createDeleteOption());
+
+			this.setBorder(BorderFactory.createEmptyBorder(4, 4, 4, 4));
+		}
+
+		private JLabel createMoveOption()
+		{
+			return new JLabel(Images.PIN_ICON.getScaledIcon(16, 16));
+		}
+
+		private JLabel createChangeColorOption()
+		{
+			JLabel changeColor = new JLabel(Images.PICKER_ICON.getScaledIcon(16, 16));
+			changeColor.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseEntered(MouseEvent event)
+				{
+					PostThatTitleBar.this.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+				}
+
+				@Override
+				public void mouseClicked(MouseEvent event)
+				{
+					Color selectedColor = JColorChooser.showDialog(PostThatFrame.this, Internationalization.get("CHANGE_COLOR"), PostThatFrame.this.getBackground());
+					PostThatFrame.this.changeBackground(selectedColor);
+				}
+			});
+			return changeColor;
+		}
+
+		private JLabel createDeleteOption()
+		{
+			JLabel delete = new JLabel(Images.TRASH_ICON.getScaledIcon(16, 16));
+			delete.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseEntered(MouseEvent event)
+				{
+					PostThatTitleBar.this.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+				}
+
+				@Override
+				public void mouseClicked(MouseEvent event)
+				{
+					PostThatFrame.this.doDefaultCloseAction();
+				}
+			});
+			return delete;
+		}
+
 	}
 }
