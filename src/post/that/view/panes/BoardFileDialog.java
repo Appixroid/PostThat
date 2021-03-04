@@ -33,7 +33,14 @@ public class BoardFileDialog extends JFileChooser
 
 	private File getFile(int userSelection)
 	{
-		return userSelection == JFileChooser.APPROVE_OPTION ? this.getSelectedFile() : null;
+		if(userSelection == JFileChooser.APPROVE_OPTION)
+		{
+			return this.getSelectedFile();
+		}
+		else
+		{
+			return null;
+		}
 	}
 
 	public static File getSaveFile(JComponent parent)
