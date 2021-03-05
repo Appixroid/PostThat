@@ -128,7 +128,7 @@ public class PostThatFrame extends JInternalFrame implements ColorListenable
 		contentPane.add(this.titleBar, BorderLayout.NORTH);
 
 		this.content = new JTextArea();
-		contentPane.add(this.content, BorderLayout.CENTER);
+		contentPane.add(new BorderlessScrollPane(this.content), BorderLayout.CENTER);
 
 		this.setBorder(BorderFactory.createEmptyBorder());
 	}
