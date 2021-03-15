@@ -21,3 +21,4 @@ OPEN_BOARD=Ouvrir un tableau
 CLOSE_BOARD=Fermer le tableau
 POST_THAT_BOARD_FILE=Fichier de tableau Post That
 QUIT=Quitter
+CREATE_BOARD=Créer un tableau
