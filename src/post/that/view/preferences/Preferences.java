@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -172,11 +173,14 @@ public class Preferences
 	{
 		try
 		{
-			Files.writeString(Preferences.CONFIG_FILE, this.getPreferencesFileContent());
+			File parentFile = CONFIG_FILE.toFile().getParentFile();
+			parentFile.mkdirs();
+			Files.writeString(Preferences.CONFIG_FILE, this.getPreferencesFileContent(), StandardOpenOption.CREATE, StandardOpenOption.WRITE, StandardOpenOption.TRUNCATE_EXISTING);
 			return true;
 		}
 		catch(IOException e)
 		{
+			e.printStackTrace();
 			return false;
 		}
 	}
