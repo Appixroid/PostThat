@@ -5,6 +5,7 @@ CONFIRM_EXIT_WITH_SAVE_ERROR=Unable to save board, are you sure to leave ?
 FILE=File
 CREATE_POST_THAT=Create Post That
 SAVE=Save
+SAVE_ALL=Save All
 UNABLE_TO_SAVE_BOARD=Unable to save board
 BOARD_MANAGEMENT=Board management
 CLEAR_BOARD=Clear board

@@ -5,6 +5,7 @@ CONFIRM_EXIT_WITH_SAVE_ERROR=Sauvegarde du tableau impossible, voulez-vous quitt
 FILE=Fichier
 CREATE_POST_THAT=Ajouter un Post That
 SAVE=Sauvegarder
+SAVE_ALL=Tout Sauvegarder
 UNABLE_TO_SAVE_BOARD=Impossible de sauvegarder le tableau
 BOARD_MANAGEMENT=Gestion du tableau
 CLEAR_BOARD=Nettoyer tableau
