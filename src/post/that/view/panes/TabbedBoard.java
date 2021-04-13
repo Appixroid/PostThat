@@ -1,16 +1,23 @@
 package post.that.view.panes;
 
 import java.awt.BorderLayout;
+import java.awt.Cursor;
+import java.awt.Dimension;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.Icon;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
+import post.that.view.adapter.MouseAdapter;
 import post.that.view.listeners.board.BoardEvent;
 import post.that.view.listeners.board.BoardListener;
 import post.that.view.preferences.Preferences;
@@ -19,6 +26,7 @@ import post.that.view.ressources.Images;
 public class TabbedBoard extends JPanel implements BoardListener
 {
 	private static final String OPEN_BOARDS_SETTINGS = "OPEN_BOARDS";
+	private static final Icon MODIFIED_ICON = Images.NEW_ICON.getScaledIcon(16, 16);
 
 	private static final long serialVersionUID = -9180673147053998822L;
 
@@ -48,8 +56,10 @@ public class TabbedBoard extends JPanel implements BoardListener
 
 	public void add(BoardPane board)
 	{
-		this.tabs.addTab(board.getDisplaySource(), null, board);
 		board.addBoardListener(this);
+		
+		this.tabs.addTab(board.getDisplaySource(), board);		
+		this.tabs.setTabComponentAt(this.getBoards().indexOf(board), new BoardTabComponent(board));
 	}
 
 	public void addAll(Collection<BoardPane> boards)
@@ -162,13 +172,12 @@ public class TabbedBoard extends JPanel implements BoardListener
 
 	public void setSaved(BoardPane board)
 	{
-		this.setIcon(board, null);
-		this.tabs.setTitleAt(this.getBoards().indexOf(board), board.getDisplaySource());
+		this.getTabComponentFor(board).setSaved();
 	}
 
 	public void setModified(BoardPane board)
 	{
-		this.setIcon(board, Images.NEW_ICON.getScaledIcon(16, 16));
+		this.getTabComponentFor(board).setModified();
 	}
 
 	private void openSavedBoards()
@@ -197,9 +206,65 @@ public class TabbedBoard extends JPanel implements BoardListener
 
 		this.addAll(boards);
 	}
-
-	private void setIcon(BoardPane board, Icon icon)
+	
+	private BoardTabComponent getTabComponentFor(BoardPane board)
 	{
-		this.tabs.setIconAt(this.getBoards().indexOf(board), icon);
+		return (BoardTabComponent) this.tabs.getTabComponentAt(this.getBoards().indexOf(board));
+	}
+	
+	private class BoardTabComponent extends JPanel implements MouseAdapter
+	{
+		private static final long serialVersionUID = -6959815063623471506L;
+				
+		private BoardPane contentPane;
+		
+		private JLabel tabIcon;
+		private JLabel tabTitle;
+		private JLabel tabButton;
+		
+		public BoardTabComponent(BoardPane board)
+		{			
+			this.contentPane = board;
+			this.setOpaque(false);
+			this.build(board);
+		}
+
+		private void build(BoardPane board)
+		{
+			this.setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
+			
+			this.tabIcon = new JLabel();
+			this.add(this.tabIcon);
+			
+			this.add(Box.createRigidArea(new Dimension(8, 0)));
+			
+			this.tabTitle = new JLabel(board.getDisplaySource());
+			this.add(this.tabTitle);
+
+			this.add(Box.createRigidArea(new Dimension(8, 0)));
+			
+			this.tabButton = new JLabel(Images.CLOSE_ICON.getScaledIcon(16, 16));
+			this.tabButton.addMouseListener(this);
+			this.tabButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+			this.add(this.tabButton);
+			
+		}
+		
+		public void setSaved()
+		{
+			this.tabIcon.setIcon(null);
+			this.tabTitle.setText(this.contentPane.getDisplaySource());
+		}
+		
+		public void setModified()
+		{
+			this.tabIcon.setIcon(TabbedBoard.MODIFIED_ICON);
+		}
+		
+		@Override
+		public void mouseClicked(MouseEvent event)
+		{
+			TabbedBoard.this.close(this.contentPane);
+		}
 	}
 }

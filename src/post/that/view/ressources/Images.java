@@ -21,7 +21,8 @@ public enum Images
 	NEW_ICON("assets/new.png"),
 	IMPORT_ICON("assets/import.png"),
 	CLOSE_TAB_ICON("assets/close_tab.png"),
-	EXIT_ICON("assets/exit.png");
+	EXIT_ICON("assets/exit.png"),
+	CLOSE_ICON("assets/close.png");
 
 	private BufferedImage image;
 	private boolean loaded;
@@ -35,7 +36,7 @@ public enum Images
 		}
 		catch(IOException e)
 		{
-			this.image = new BufferedImage(0, 0, BufferedImage.TYPE_INT_ARGB);
+			this.image = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
 			this.loaded = false;
 		}
 	}
