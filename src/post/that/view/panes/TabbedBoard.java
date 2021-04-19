@@ -185,7 +185,7 @@ public class TabbedBoard extends JPanel implements BoardListener
 	private void openSavedBoards()
 	{
 		Collection<String> savedBoards = Preferences.getInstance().getCollection(TabbedBoard.OPEN_BOARDS_SETTINGS);
-
+		System.out.println(savedBoards.size());
 		if(savedBoards.size() > 0)
 		{
 			this.addAllBoardsFromPath(savedBoards);
