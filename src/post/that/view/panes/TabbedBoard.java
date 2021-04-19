@@ -26,6 +26,8 @@ import post.that.view.ressources.Images;
 public class TabbedBoard extends JPanel implements BoardListener
 {
 	private static final String OPEN_BOARDS_SETTINGS = "OPEN_BOARDS";
+	
+	private static final Icon SAVED_ICON = Images.SAVED_ICON.getScaledIcon(16, 16);
 	private static final Icon MODIFIED_ICON = Images.NEW_ICON.getScaledIcon(16, 16);
 
 	private static final long serialVersionUID = -9180673147053998822L;
@@ -233,7 +235,7 @@ public class TabbedBoard extends JPanel implements BoardListener
 		{
 			this.setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
 			
-			this.tabIcon = new JLabel();
+			this.tabIcon = new JLabel(TabbedBoard.SAVED_ICON);
 			this.add(this.tabIcon);
 			
 			this.add(Box.createRigidArea(new Dimension(8, 0)));
@@ -252,7 +254,7 @@ public class TabbedBoard extends JPanel implements BoardListener
 		
 		public void setSaved()
 		{
-			this.tabIcon.setIcon(null);
+			this.tabIcon.setIcon(TabbedBoard.SAVED_ICON);
 			this.tabTitle.setText(this.contentPane.getDisplaySource());
 		}
 		

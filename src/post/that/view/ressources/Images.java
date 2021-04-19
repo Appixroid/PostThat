@@ -11,18 +11,21 @@ import javax.swing.ImageIcon;
 
 public enum Images
 {
+	EMPTY(""),
 	BOARD_BACKGROUND("assets/background.jpg"),
 	PIN_ICON("assets/pin.png"),
 	TRASH_ICON("assets/trash.png"),
 	NOTE_ICON("assets/note.png"),
 	SAVE_ICON("assets/save.png"),
+	SAVE_ALL_ICON("assets/save_all.png"),
 	CLEAR_ICON("assets/clear.png"),
 	PICKER_ICON("assets/picker.png"),
 	NEW_ICON("assets/new.png"),
 	IMPORT_ICON("assets/import.png"),
 	CLOSE_TAB_ICON("assets/close_tab.png"),
 	EXIT_ICON("assets/exit.png"),
-	CLOSE_ICON("assets/close.png");
+	CLOSE_ICON("assets/close.png"),
+	SAVED_ICON("assets/saved.png");
 
 	private BufferedImage image;
 	private boolean loaded;

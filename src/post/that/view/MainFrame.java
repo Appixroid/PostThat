@@ -160,7 +160,7 @@ public class MainFrame extends JFrame implements WindowAdapter
 	{
 		JMenuItem saveAllItem = new JMenuItem(Internationalization.get("SAVE_ALL"));
 		saveAllItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_DOWN_MASK | InputEvent.SHIFT_DOWN_MASK));
-		saveAllItem.setIcon(Images.SAVE_ICON.getScaledIcon(16, 16));
+		saveAllItem.setIcon(Images.SAVE_ALL_ICON.getScaledIcon(16, 16));
 		saveAllItem.addActionListener(event -> {
 			if(!this.tabs.saveAll())
 			{

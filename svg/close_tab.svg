@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="264.76309mm"
+   height="264.76309mm"
+   viewBox="0 0 264.76309 264.76309"
+   version="1.1"
+   id="svg8"
+   inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)"
+   sodipodi:docname="close_tab.svg"
+   inkscape:export-filename="/mnt/Data/Developpement/Projets Programmation/Projets InDev/Projets Java/PostThat/assets/close_tab.png"
+   inkscape:export-xdpi="6.1398287"
+   inkscape:export-ydpi="6.1398287">
+  <defs
+     id="defs2" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.5"
+     inkscape:cx="-41.16386"
+     inkscape:cy="548.14169"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     showguides="true"
+     inkscape:window-width="1920"
+     inkscape:window-height="1016"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
+     inkscape:window-maximized="1"
+     inkscape:pagecheckerboard="true"
+     inkscape:guide-bbox="true" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(4.8718312,61.567405)">
+    <g
+       id="g913"
+       transform="translate(0,-54.702272)">
+      <g
+         transform="translate(4.3357531,-29.250287)"
+         id="g828">
+        <rect
+           style="fill:#c8983d;fill-opacity:1;stroke:#e1e1e1;stroke-width:17.48800087;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+           id="rect815"
+           width="216.74667"
+           height="121.92"
+           x="-0.39645228"
+           y="85.834511"
+           inkscape:export-filename="/mnt/Data/Developpement/Projets Programmation/Projets InDev/Projets Java/EclipseWorkspace/PostThat/assets/board.png"
+           inkscape:export-xdpi="27.76018"
+           inkscape:export-ydpi="27.76018" />
+        <path
+           style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           d="M 8.2587277,94.516755 H -9.1405176 l 0.00113,-8.756892 c 0,-5.149624 4.248266,-8.661905 8.65853783,-8.661905 l 8.73957877,0.06633 v 17.352468"
+           id="path872"
+           inkscape:connector-curvature="0"
+           sodipodi:nodetypes="cccccc"
+           inkscape:export-filename="/mnt/Data/Developpement/Projets Programmation/Projets InDev/Projets Java/EclipseWorkspace/PostThat/assets/board.png"
+           inkscape:export-xdpi="27.76018"
+           inkscape:export-ydpi="27.76018" />
+        <path
+           style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26637223px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           d="m 8.258728,198.91211 v 17.58734 l -8.78077567,-0.001 c -5.16367633,0 -8.68553663,-4.29419 -8.68553663,-8.75215 l 0.066481,-8.83405 H 8.2586979"
+           id="path872-7"
+           inkscape:connector-curvature="0"
+           sodipodi:nodetypes="cccccc"
+           inkscape:export-filename="/mnt/Data/Developpement/Projets Programmation/Projets InDev/Projets Java/EclipseWorkspace/PostThat/assets/board.png"
+           inkscape:export-xdpi="27.76018"
+           inkscape:export-ydpi="27.76018" />
+        <path
+           style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26775572px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           d="m 207.50801,198.91223 h 17.58735 l -0.001,8.87223 c 0,5.21744 -4.29419,8.77598 -8.75215,8.77598 l -8.83405,-0.0672 v -17.58101"
+           id="path872-7-5"
+           inkscape:connector-curvature="0"
+           sodipodi:nodetypes="cccccc"
+           inkscape:export-filename="/mnt/Data/Developpement/Projets Programmation/Projets InDev/Projets Java/EclipseWorkspace/PostThat/assets/board.png"
+           inkscape:export-xdpi="27.76018"
+           inkscape:export-ydpi="27.76018" />
+        <path
+           style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26659822px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           d="M 207.50816,94.516914 V 77.087421 l 8.87535,9.91e-4 c 5.21927,0 8.77906,4.255647 8.77906,8.673595 l -0.0672,8.754748 h -17.58719"
+           id="path872-7-5-3"
+           inkscape:connector-curvature="0"
+           sodipodi:nodetypes="cccccc"
+           inkscape:export-filename="/mnt/Data/Developpement/Projets Programmation/Projets InDev/Projets Java/EclipseWorkspace/PostThat/assets/board.png"
+           inkscape:export-xdpi="27.76018"
+           inkscape:export-ydpi="27.76018" />
+      </g>
+      <g
+         inkscape:label="Layer 1"
+         id="layer1-5"
+         transform="translate(132.01328,18.832593)">
+        <rect
+           style="opacity:1;fill:#cc0000;fill-opacity:1;stroke:none;stroke-width:2.69243789;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+           id="rect815-6"
+           width="64"
+           height="64"
+           x="63.877975"
+           y="120.3631"
+           ry="0" />
+        <path
+           style="fill:none;stroke:#ffffff;stroke-width:8;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+           d="M 79.830636,168.41036 111.73736,136.50363"
+           id="path817"
+           inkscape:connector-curvature="0" />
+        <path
+           style="fill:none;stroke:#ffffff;stroke-width:8;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+           d="M 111.73736,168.41035 79.830639,136.50363"
+           id="path817-3"
+           inkscape:connector-curvature="0" />
+      </g>
+    </g>
+  </g>
+</svg>
