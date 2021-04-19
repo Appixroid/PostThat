@@ -25,12 +25,12 @@ import post.that.view.ressources.Images;
 
 public class TabbedBoard extends JPanel implements BoardListener
 {
+	private static final long serialVersionUID = -9180673147053998822L;
+	
 	private static final String OPEN_BOARDS_SETTINGS = "OPEN_BOARDS";
 	
 	private static final Icon SAVED_ICON = Images.SAVED_ICON.getScaledIcon(16, 16);
 	private static final Icon MODIFIED_ICON = Images.MODIFIED_ICON.getScaledIcon(16, 16);
-
-	private static final long serialVersionUID = -9180673147053998822L;
 
 	private JTabbedPane tabs = new JTabbedPane();
 

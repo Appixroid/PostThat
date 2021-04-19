@@ -61,12 +61,26 @@ public class PostThatBoard
 
 	public String getFullSource()
 	{
-		return this.source.getAbsolutePath();
+		if(this.source.isFile())
+		{
+			return this.source.getAbsolutePath();
+		}
+		else
+		{
+			return "";
+		}
 	}
 
 	public String getSourceName()
 	{
-		return this.source.getName();
+		if(this.source.isFile())
+		{
+			return this.source.getName();
+		}
+		else
+		{
+			return "";
+		}
 	}
 
 	public boolean addAll(Collection<PostThat> postThats)
