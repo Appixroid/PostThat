@@ -20,7 +20,7 @@ public enum Images
 	SAVE_ALL_ICON("assets/save_all.png"),
 	CLEAR_ICON("assets/clear.png"),
 	PICKER_ICON("assets/picker.png"),
-	NEW_ICON("assets/new.png"),
+	MODIFIED_ICON("assets/modified.png"),
 	IMPORT_ICON("assets/import.png"),
 	CLOSE_TAB_ICON("assets/close_tab.png"),
 	EXIT_ICON("assets/exit.png"),

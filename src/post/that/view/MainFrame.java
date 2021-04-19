@@ -127,7 +127,7 @@ public class MainFrame extends JFrame implements WindowAdapter
 	{
 		JMenuItem createItem = new JMenuItem(Internationalization.get("CREATE_BOARD"));
 		createItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, InputEvent.CTRL_DOWN_MASK));
-		createItem.setIcon(Images.NEW_ICON.getScaledIcon(16, 16));
+		createItem.setIcon(Images.MODIFIED_ICON.getScaledIcon(16, 16));
 		createItem.addActionListener(event -> {
 			this.tabs.addEmpty();
 		});
