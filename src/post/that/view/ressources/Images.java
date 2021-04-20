@@ -22,7 +22,6 @@ public enum Images
 	PICKER_ICON("assets/picker.png"),
 	MODIFIED_ICON("assets/modified.png"),
 	IMPORT_ICON("assets/import.png"),
-	CLOSE_TAB_ICON("assets/close_tab.png"),
 	EXIT_ICON("assets/exit.png"),
 	CLOSE_ICON("assets/close.png"),
 	SAVED_ICON("assets/saved.png");

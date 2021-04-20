@@ -197,7 +197,7 @@ public class MainFrame extends JFrame implements WindowAdapter
 	{
 		JMenuItem closeBoardItem = new JMenuItem(Internationalization.get("CLOSE_BOARD"));
 		closeBoardItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_W, InputEvent.CTRL_DOWN_MASK));
-		closeBoardItem.setIcon(Images.CLOSE_TAB_ICON.getScaledIcon(16, 16));
+		closeBoardItem.setIcon(Images.CLOSE_ICON.getScaledIcon(16, 16));
 		closeBoardItem.addActionListener(event -> {
 			this.closeCurrentBoard();
 		});
@@ -301,7 +301,7 @@ public class MainFrame extends JFrame implements WindowAdapter
 
 	private JButton createCloseBoardButton()
 	{
-		JButton closeBoardButton = new JButton(Images.CLOSE_TAB_ICON.getScaledIcon(16, 16));
+		JButton closeBoardButton = new JButton(Images.CLOSE_ICON.getScaledIcon(16, 16));
 		closeBoardButton.addActionListener(event -> {
 			this.closeCurrentBoard();
 		});

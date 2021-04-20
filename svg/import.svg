@@ -9,9 +9,9 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="234.37015mm"
-   height="234.37015mm"
-   viewBox="0 0 234.37015 234.37015"
+   width="232.74667mm"
+   height="232.74667mm"
+   viewBox="0 0 232.74668 232.74668"
    version="1.1"
    id="svg8"
    inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)"
@@ -28,9 +28,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.5"
-     inkscape:cx="-300.69024"
-     inkscape:cy="423.9307"
+     inkscape:zoom="0.70710678"
+     inkscape:cx="641.72423"
+     inkscape:cy="385.31721"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -50,7 +50,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -58,65 +58,20 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(4.8718312,15.611427)">
+     transform="translate(4.0606994,46.242446)">
     <g
-       id="g863"
-       transform="translate(0,-31.448576)">
-      <g
-         transform="translate(4.3357531,2.198289)"
-         id="g828">
-        <rect
-           style="fill:#c8983d;fill-opacity:1;stroke:#e1e1e1;stroke-width:17.48800087;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-           id="rect815"
-           width="216.74667"
-           height="121.92"
-           x="-0.39645228"
-           y="85.834511"
-           inkscape:export-filename="/mnt/Data/Developpement/Projets Programmation/Projets InDev/Projets Java/EclipseWorkspace/PostThat/assets/board.png"
-           inkscape:export-xdpi="27.76018"
-           inkscape:export-ydpi="27.76018" />
-        <path
-           style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-           d="M 8.2587277,94.516755 H -9.1405176 l 0.00113,-8.756892 c 0,-5.149624 4.248266,-8.661905 8.65853783,-8.661905 l 8.73957877,0.06633 v 17.352468"
-           id="path872"
-           inkscape:connector-curvature="0"
-           sodipodi:nodetypes="cccccc"
-           inkscape:export-filename="/mnt/Data/Developpement/Projets Programmation/Projets InDev/Projets Java/EclipseWorkspace/PostThat/assets/board.png"
-           inkscape:export-xdpi="27.76018"
-           inkscape:export-ydpi="27.76018" />
-        <path
-           style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26637223px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-           d="m 8.258728,198.91211 v 17.58734 l -8.78077567,-0.001 c -5.16367633,0 -8.68553663,-4.29419 -8.68553663,-8.75215 l 0.066481,-8.83405 H 8.2586979"
-           id="path872-7"
-           inkscape:connector-curvature="0"
-           sodipodi:nodetypes="cccccc"
-           inkscape:export-filename="/mnt/Data/Developpement/Projets Programmation/Projets InDev/Projets Java/EclipseWorkspace/PostThat/assets/board.png"
-           inkscape:export-xdpi="27.76018"
-           inkscape:export-ydpi="27.76018" />
-        <path
-           style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26775572px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-           d="m 207.50801,198.91223 h 17.58735 l -0.001,8.87223 c 0,5.21744 -4.29419,8.77598 -8.75215,8.77598 l -8.83405,-0.0672 v -17.58101"
-           id="path872-7-5"
-           inkscape:connector-curvature="0"
-           sodipodi:nodetypes="cccccc"
-           inkscape:export-filename="/mnt/Data/Developpement/Projets Programmation/Projets InDev/Projets Java/EclipseWorkspace/PostThat/assets/board.png"
-           inkscape:export-xdpi="27.76018"
-           inkscape:export-ydpi="27.76018" />
-        <path
-           style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26659822px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-           d="M 207.50816,94.516914 V 77.087421 l 8.87535,9.91e-4 c 5.21927,0 8.77906,4.255647 8.77906,8.673595 l -0.0672,8.754748 h -17.58719"
-           id="path872-7-5-3"
-           inkscape:connector-curvature="0"
-           sodipodi:nodetypes="cccccc"
-           inkscape:export-filename="/mnt/Data/Developpement/Projets Programmation/Projets InDev/Projets Java/EclipseWorkspace/PostThat/assets/board.png"
-           inkscape:export-xdpi="27.76018"
-           inkscape:export-ydpi="27.76018" />
-      </g>
+       id="g2508"
+       transform="translate(2.0919922e-6,-31.039794)">
       <path
          inkscape:connector-curvature="0"
          id="rect821"
-         d="M 96.31319,47.285716 V 111.28597 H 80.313132 l 32.000108,31.9996 32.00012,-31.9996 H 128.3133 V 47.285716 Z"
+         d="M 96.31319,15.83714 V 79.837394 H 80.313132 L 112.31324,111.83699 144.31336,79.837394 H 128.3133 V 15.83714 Z"
          style="opacity:1;fill:#09a603;fill-opacity:1;stroke:none;stroke-width:2.843009;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <path
+         inkscape:connector-curvature="0"
+         id="path2504"
+         d="M 3.9393006,56.584222 V 178.50423 H 220.68597 V 56.584222"
+         style="fill:none;stroke:#09a603;stroke-width:16;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
     </g>
   </g>
 </svg>
